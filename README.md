@@ -55,6 +55,7 @@ Open your browser and navigate to http://localhost:3000 to view the application.
  -   Axios
  - Formik
  - hCaptcha
+ - SASS
  
 ## Contributing
 
