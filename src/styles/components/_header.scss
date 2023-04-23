@@ -1,0 +1,31 @@
+header {
+  background: darken($color: white, $amount: 3);
+  padding: 10px 30px 10px 30px;
+  width: 100%;
+  height: 70px;
+  box-shadow: 0 1.5px 3px hsla(0, 0%, 0%, 0.05),
+    0 1.5px 6px hsla(0, 0%, 0%, 0.05), 0 3px 12px hsla(0, 0%, 0%, 0.05);
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.img-stackoverflow {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 677px) {
+  .mobile-logo {
+    display: none;
+  }
+}
+@media screen and (max-width: 677px) {
+  .img-stackoverflow {
+    display: none;
+  }
+}

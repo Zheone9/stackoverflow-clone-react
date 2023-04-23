@@ -1,0 +1,26 @@
+.div-votesCounter {
+  margin-right: 25px;
+
+  i {
+    font-size: 3rem;
+    color: $light-grey;
+    cursor: pointer;
+  }
+  .div-votesCounterNumber {
+    font-size: 2.2rem;
+    color: $dark-grey;
+    margin: 0 10px 0 10px;
+  }
+  .div-votesCounterDown,
+  .div-votesCounterUp {
+    text-align: center;
+  }
+}
+
+.red {
+  color: #e25656 !important;
+}
+
+.green {
+  color: #2ed75d !important;
+}

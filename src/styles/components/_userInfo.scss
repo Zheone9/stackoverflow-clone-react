@@ -1,0 +1,33 @@
+.div-user {
+  background-color: $light-blue;
+  padding: 8px;
+  font-size: 0.8rem;
+  width: 260px;
+  border-radius: 15px;
+
+  .div-userInfoDate {
+    color: #b59b90;
+    margin-left: 6px;
+  }
+
+  .div-userName {
+    color: $dark-blue;
+  }
+  .div-userInfo {
+    display: flex;
+    padding: 6px;
+    justify-content: start;
+  }
+  .div-userImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: $light-grey;
+    margin-right: 10px;
+  }
+  .div-userPoints {
+    margin-top: 10px;
+    font-weight: 700;
+    color: #8e737c;
+  }
+}

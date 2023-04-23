@@ -1,0 +1,14 @@
+@import "./base/settings.scss";
+@import "./base/base.scss";
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+//Components
+@import "./components/auth.scss";
+@import "./components/buttons.scss";
+@import "./components/header.scss";
+@import "./components/userInfo.scss";
+@import "./components/votesCounter.scss";
+@import "./components/userQuestion.scss";
+@import "./components/login.scss";
+@import "./components/register.scss";
+@import "./components/modalDialogLogin.scss";
+@import "./components/createEntry.scss";

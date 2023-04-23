@@ -1,0 +1,8 @@
+.link {
+  color: $dark-blue;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    color: lighten($color: $dark-blue, $amount: 20);
+  }
+}
