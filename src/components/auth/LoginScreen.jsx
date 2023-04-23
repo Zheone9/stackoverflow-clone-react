@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
-import { startLoginEmailPassword } from "../../actions/auth";
+import {
+  startLoginEmailPassword,
+  startLoginWithGoogle,
+} from "../../actions/auth";
 
+import { GoogleLogin } from "@react-oauth/google";
 const LoginScreen = () => {
   const [formValues, handleInputChange] = useForm({
     email: "jajassddasss2@gmail.com",
     password: "123456",
   });
-
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { email, password } = formValues;
@@ -24,7 +28,20 @@ const LoginScreen = () => {
         setError(e.message);
       });
   };
-
+  const onSuccess = ({ clientId, credential }) => {
+    dispatch(startLoginWithGoogle(clientId, credential))
+      .then(() => {
+        console.log("Login exitoso");
+        navigate("/");
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+  const onFailure = (e) => {
+    console.log("Login no exitoso", e);
+  };
   return (
     <>
       <div className="container-login animate__animated animate__fadeIn">
@@ -36,10 +53,12 @@ const LoginScreen = () => {
           </div>
           <div className=" mt-5">
             <div className="div-login-buttons mt-5 mb-5">
-              <button className="pointer">
-                <img src="google.png" alt="" className="img-google" /> Log in
-                with Google
-              </button>
+              <GoogleLogin
+                onSuccess={onSuccess}
+                onError={onFailure}
+                theme="filled_blue"
+                scope="email profile https://www.googleapis.com/auth/plus.login"
+              />
             </div>
             <div className="div-login">
               <form action="">

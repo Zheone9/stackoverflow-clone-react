@@ -81,7 +81,7 @@ export const voteEntry = (id, value) => {
         return;
       }
       await axios.patch(
-        "http://192.168.101.7:8080/api/questions/vote",
+        `${APIURL}/questions/vote`,
         {
           questionId: id,
           vote: value,
@@ -116,14 +116,20 @@ const postEntry = async (values) => {
     headers: { "x-access-token": token },
   };
   const endpoint = `${APIURL}/questions/create`;
-  return axios.post(endpoint, values, config);
+
+  try {
+    return await axios.post(endpoint, values, config);
+  } catch (error) {
+    console.error("Error in axios.post:", error);
+    throw error;
+  }
 };
 
 export const startNewQuestion = (values) => {
+  console.log(values);
   return async (dispatch) => {
     try {
       const response = await postEntry(values);
-      console.log(response.data);
       dispatch(addNewEntry(response.data));
     } catch (error) {
       console.error("Error creating entry:", error);

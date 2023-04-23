@@ -7,7 +7,6 @@ import { Navigate } from "react-router-dom";
 import formValidationSchema from "../../../helpers/newQuestion/formValidationSchema";
 import validateForm from "../../../helpers/newQuestion/validateForm";
 import { startNewQuestion } from "../../../actions/entries";
-import { addNewEntry } from "../../../actions/auth";
 
 const CreateNewEntry = () => {
   const [formValues, handleInputChange, reset] = useForm({
@@ -15,6 +14,7 @@ const CreateNewEntry = () => {
     body: "",
     hCaptcha: "",
   });
+  const siteKeyHcaptcha = import.meta.env.VITE_REACT_HCAPTCHA_SITEKEY;
 
   const { title, body } = formValues;
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ const CreateNewEntry = () => {
   };
   const [formSent, setFormSent] = useState(false);
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    console.log("asjsjajsa");
     const isValid = validateForm(values);
     console.log(values);
     console.log(isValid);
@@ -121,7 +120,7 @@ const CreateNewEntry = () => {
               </div>
 
               <HCaptcha
-                sitekey="e0d47fa7-5707-49b6-ac4c-9350bdc6d5c5"
+                sitekey={siteKeyHcaptcha}
                 onVerify={(token) => handleVerification(token, setFieldValue)}
                 onExpire={() => {
                   setFieldValue("hCaptcha", "");
