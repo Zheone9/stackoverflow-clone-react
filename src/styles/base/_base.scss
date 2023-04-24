@@ -11,6 +11,7 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
+
 .mt-1 {
   margin-top: 5px;
 }
@@ -83,4 +84,22 @@ html {
   html {
     font-size: 18px;
   }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.p-error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 0.7em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
 }

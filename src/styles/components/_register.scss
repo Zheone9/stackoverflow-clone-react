@@ -1,29 +1,54 @@
 .container-register {
-  display: flex;
-  position: relative;
-  margin-top: 60px;
-  height: calc(100vh);
   background-color: darken($color: #ffffff, $amount: 5);
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 1.3em;
+  padding-right: 1.3em;
+  padding-top: 1.3em;
+  display: flex; /* Añadido */
+  align-items: center; /* Añadido */
   justify-content: center;
-  align-items: center;
+  height: 100vh;
   z-index: 10;
+  // max-width: 800px;
+}
+
+.div-info {
+  display: none;
 }
 
 .div-register {
   background-color: white;
-  padding: 20px;
+  padding: 1.25em;
   border-radius: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  max-width: 300px;
 }
 
-@media screen and (max-width: 884px) {
-  .container-register {
-    flex-direction: column;
-  }
+@media screen and (min-width: 884px) {
   .div-info {
-    display: none;
+    display: block;
   }
 }
+
+@media screen and (min-width: 1377px) {
+  .div-register {
+    width: 460px;
+  }
+}
+
+@media screen and (max-width: 883px) {
+  .div-register {
+    width: 460px;
+  }
+}
+
+@media screen and (max-width: 571px) {
+  .div-register {
+    width: auto;
+  }
+}
+
+// @media screen and (min-width: 1000px) {
+//   .div-register {
+//     flex-basis: 80%;
+//     flex-grow: 2;
+//   }
+// }

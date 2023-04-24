@@ -5,7 +5,6 @@ import AskQuestionButton from "./AskQuestionButton";
 import { startGetEntries } from "../../../actions/entries";
 import LoadingScreen from "../../LoadingScreen";
 import CreateNewEntry from "./CreateNewEntry";
-import { connect } from "react-redux";
 
 const UserEntries = () => {
   const { entries } = useSelector((state) => state.userEntries);
@@ -15,6 +14,10 @@ const UserEntries = () => {
   const isAuthenticaded = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+  const [optionsClicked, setOptionsClicked] = useState(false);
+  useEffect(() => {
+    console.log(optionsClicked);
+  }, [optionsClicked]);
 
   const [newQuestion, setnewQuestion] = useState(false);
 
@@ -32,10 +35,10 @@ const UserEntries = () => {
 
   return (
     <main>
-      <div className="div-container-question  p-5">
+      <div className="container-entries p-5">
         {newQuestion ? <CreateNewEntry /> : null}
         {isAuthenticaded && !newQuestion ? (
-          <div>
+          <div className="div-btn-askQuestion">
             <AskQuestionButton setnewQuestion={setnewQuestion} />
           </div>
         ) : null}
@@ -43,7 +46,12 @@ const UserEntries = () => {
           <LoadingScreen color={"#0a95ff"} />
         ) : (
           sortedEntries.map((entry) => (
-            <UserEntry key={entry.uid} entry={entry} />
+            <UserEntry
+              key={entry.uid}
+              entry={entry}
+              setOptionsClicked={setOptionsClicked}
+              isAuthenticaded={isAuthenticaded}
+            />
           ))
         )}
       </div>

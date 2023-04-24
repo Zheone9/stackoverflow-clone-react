@@ -16,7 +16,6 @@
   background-color: white;
   border-radius: 10px;
   z-index: 10;
-  max-width: 800px;
 }
 
 form button {
@@ -48,13 +47,12 @@ form .div-btn-login {
 }
 
 .div-login-buttons {
-  text-align: center;
   display: flex;
   justify-content: center;
   button {
     background-color: white;
     color: black;
-    padding: 12px 20px;
+    padding: 0.75em 1.25em;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
@@ -62,25 +60,25 @@ form .div-btn-login {
 }
 
 .container-login {
-  position: relative;
-  // justify-content: center;
-  margin-top: 70px;
-  width: 100%;
-  flex-direction: column;
-  height: calc(100vh);
+  height: 100vh;
+  padding-top: 1.7em;
   background-color: darken($color: #ffffff, $amount: 5);
-
-  .div-logo {
-    text-align: center;
-    padding-top: 100px;
-    img {
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
-    }
-  }
+  padding-left: 1.3em;
+  padding-right: 1.5em;
+  z-index: 10;
+  // width: 100%;
 }
 
+.div-logo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  img {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+  }
+}
 label {
   font-weight: 600;
   font-family: inherit;
@@ -92,20 +90,23 @@ label {
 form button:hover {
   background-color: darken($color: $dark-blue, $amount: 5);
 }
-.center {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 600px;
-  margin-right: 1em;
-}
 
 @media (min-width: 468px) {
   form .div-btn-login {
     button {
       width: auto;
     }
+  }
+}
+
+@media (min-width: 495px) {
+  .div-login {
+    width: 400px;
+  }
+}
+
+@media (min-width: 595px) {
+  .div-login {
+    width: 500px;
   }
 }

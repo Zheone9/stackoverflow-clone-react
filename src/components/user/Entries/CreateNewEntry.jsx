@@ -118,14 +118,16 @@ const CreateNewEntry = () => {
                   }
                 />
               </div>
+              <div className="text-center">
+                <HCaptcha
+                  sitekey={siteKeyHcaptcha}
+                  onVerify={(token) => handleVerification(token, setFieldValue)}
+                  onExpire={() => {
+                    setFieldValue("hCaptcha", "");
+                  }}
+                />
+              </div>
 
-              <HCaptcha
-                sitekey={siteKeyHcaptcha}
-                onVerify={(token) => handleVerification(token, setFieldValue)}
-                onExpire={() => {
-                  setFieldValue("hCaptcha", "");
-                }}
-              />
               {errors.hCaptcha && touched.hCaptcha ? (
                 <div className="error-message">{errors.hCaptcha}</div>
               ) : null}

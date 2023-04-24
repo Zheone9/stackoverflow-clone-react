@@ -3,12 +3,19 @@ import UserInfo from "./UserInfo";
 import VotesCounter from "./VotesCounter";
 import calculateDifference from "../../../helpers/entries/calculateDateDifference";
 
-const UserEntry = ({ entry }) => {
+const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
   return (
     <div className=" mb-5">
       <div className="div-questionTitle">
         <h1>{entry.title}</h1>
+        {isAuthenticaded && (
+          <i
+            className="fa fa-ellipsis-v three-dots-icon"
+            aria-hidden="true"
+            onClick={() => setOptionsClicked(true)}
+          ></i>
+        )}
       </div>
       <div className="question-info">
         <p>{date}</p>

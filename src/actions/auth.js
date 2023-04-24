@@ -23,7 +23,6 @@ export const addNewEntry = (entryData) => ({
   },
 });
 export const startLoginEmailPassword = (email, password) => {
-  console.log(email, password);
   return async (dispatch) => {
     try {
       const response = await axios.post(`${APIURL}/auth`, {
@@ -33,9 +32,9 @@ export const startLoginEmailPassword = (email, password) => {
 
       localStorage.setItem("token", response.data.token);
       dispatch(login(response.data.payload.username));
+      return true;
     } catch (error) {
-      return Promise.reject(error);
-      // dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
+      return false;
     }
   };
 };
@@ -50,9 +49,36 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
       const { token } = response.data;
       localStorage.setItem("token", token);
       dispatch(login(response.data.payload));
+      return true;
     } catch (error) {
       // dispatch({ type: LOGIN_WITH_GOOGLE_FAILURE, payload: error.response.data.message });
-      return Promise.reject(error);
+      return false;
+    }
+  };
+};
+
+export const startRegisterWithEmail = (username, email, password) => {
+  return async () => {
+    try {
+      const response = await axios.post(`${APIURL}/auth/new`, {
+        username,
+        email,
+        password,
+      });
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      dispatch(login(response.data.payload.username));
+      return {
+        success: true,
+        error: null,
+      };
+    } catch (error) {
+      // dispatch({ type: LOGIN_WITH_GOOGLE_FAILURE, payload: error.response.data.message });
+      console.log(error);
+      return {
+        success: false,
+        error: error.response.data.error,
+      };
     }
   };
 };
