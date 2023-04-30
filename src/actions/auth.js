@@ -8,11 +8,12 @@ export const logoutUser = () => {
   };
 };
 
-export const login = (displayName) => {
+export const login = ({ uid, username }) => {
   return {
     type: types.userLoggedIn,
     payload: {
-      displayName,
+      username,
+      uid,
     },
   };
 };
@@ -31,7 +32,7 @@ export const startLoginEmailPassword = (email, password) => {
       });
 
       localStorage.setItem("token", response.data.token);
-      dispatch(login(response.data.payload.username));
+      dispatch(login(response.data.payload));
       return true;
     } catch (error) {
       return false;
@@ -42,10 +43,14 @@ export const startLoginEmailPassword = (email, password) => {
 export const startLoginWithGoogle = (clientId, tokenId) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${APIURL}/auth/google`, {
-        id_token: tokenId,
-        clientId,
-      });
+      const response = await axios.post(
+        `${APIURL}/auth/google`,
+        {
+          id_token: tokenId,
+          clientId,
+        },
+        { withCredentials: true }
+      );
       const { token } = response.data;
       localStorage.setItem("token", token);
       dispatch(login(response.data.payload));
@@ -67,7 +72,7 @@ export const startRegisterWithEmail = (username, email, password) => {
       });
       const { token } = response.data;
       localStorage.setItem("token", token);
-      dispatch(login(response.data.payload.username));
+      dispatch(login(response.data.payload));
       return {
         success: true,
         error: null,

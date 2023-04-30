@@ -22,7 +22,7 @@ const Header = () => {
           src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1682289016/stackoverflow_project_assets/Stack_Overflow_logo_szqi3b.svg"
           onClick={() => navigate("/")}
           className="img-stackoverflow"
-        />
+         alt=""/>
 
         <img
           src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1682289016/stackoverflow_project_assets/stackoverflow_ewuyb6.png"

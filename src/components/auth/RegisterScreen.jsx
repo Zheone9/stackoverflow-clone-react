@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import GoogleLoginButton from "./GoogleLoginButton";
 
+
 const RegisterScreen = () => {
   const [formValues, handleInputChange] = useForm({
     email: "",
@@ -20,9 +21,9 @@ const RegisterScreen = () => {
   const { email, password, name } = formValues;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleGoogleLogin = async (clientId, credential) => {
     const success = await dispatch(startLoginWithGoogle(clientId, credential));
-    dispatch(startLoginWithGoogle(clientId, credential));
     if (success) {
       console.log("Logeo exitoso");
       navigate("/");

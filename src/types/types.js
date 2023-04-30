@@ -5,4 +5,8 @@ export const types = {
   userLoggedIn: "[User] Logged",
   userLoggedOut: "[User] LoggedOut",
   addNewEntry: "[AddNewEntry] Add New Entry",
+  setLoading: "[Entry] SetLoading",
+  setOptionsClicked: "[Entry] SetOptionsClicked",
+  setNewQuestion: "[Entry] SetNewQuestion",
+  deleteEntry: "[Entry] Delete Entry",
 };

@@ -1,59 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import UserEntry from "./UserEntry";
-import AskQuestionButton from "./AskQuestionButton";
-import { startGetEntries } from "../../../actions/entries";
-import LoadingScreen from "../../LoadingScreen";
-import CreateNewEntry from "./CreateNewEntry";
+import {
+  setLoading,
+  setNewQuestion,
+  setOptionsClicked,
+  startGetEntries,
+} from "../../../actions/entries";
+import EntriesList from "./EntriesList";
+import NewEntry from "./NewEntry";
 
 const UserEntries = () => {
-  const { entries } = useSelector((state) => state.userEntries);
-  const sortedEntries = [...entries].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  const { entries, isLoading, optionsClicked, newQuestion } = useSelector(
+    (state) => state.userEntries
   );
   const isAuthenticaded = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-  const [optionsClicked, setOptionsClicked] = useState(false);
+
+  const sortedEntries = [...entries].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const handleSetNewQuestion = (value) => {
+    dispatch(setNewQuestion(value));
+  };
+
+  const handleSetOptionsClicked = (value) => {
+    dispatch(setOptionsClicked(value));
+  };
+
   useEffect(() => {
     console.log(optionsClicked);
   }, [optionsClicked]);
 
-  const [newQuestion, setnewQuestion] = useState(false);
-
   useEffect(() => {
-    if (isAuthenticaded) {
-      dispatch(startGetEntries(true)).then(() => {
-        setIsLoading(false);
-      });
-    } else {
-      dispatch(startGetEntries(false)).then(() => {
-        setIsLoading(false);
-      });
-    }
-  }, [isAuthenticaded]);
+    const loadEntries = async () => {
+      await dispatch(startGetEntries(isAuthenticaded));
+      dispatch(setLoading(false));
+    };
+    loadEntries();
+  }, [isAuthenticaded, dispatch]);
 
   return (
     <main>
       <div className="container-entries p-5">
-        {newQuestion ? <CreateNewEntry /> : null}
-        {isAuthenticaded && !newQuestion ? (
-          <div className="div-btn-askQuestion">
-            <AskQuestionButton setnewQuestion={setnewQuestion} />
-          </div>
-        ) : null}
-        {isLoading ? (
-          <LoadingScreen color={"#0a95ff"} />
-        ) : (
-          sortedEntries.map((entry) => (
-            <UserEntry
-              key={entry.uid}
-              entry={entry}
-              setOptionsClicked={setOptionsClicked}
-              isAuthenticaded={isAuthenticaded}
-            />
-          ))
-        )}
+        <NewEntry
+          newQuestion={newQuestion}
+          isAuthenticaded={isAuthenticaded}
+          setnewQuestion={handleSetNewQuestion}
+        />
+        <EntriesList
+          isLoading={isLoading}
+          sortedEntries={sortedEntries}
+          isAuthenticaded={isAuthenticaded}
+          setOptionsClicked={handleSetOptionsClicked}
+        />
       </div>
     </main>
   );

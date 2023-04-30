@@ -1,6 +1,6 @@
 import { types } from "../types/types";
 import axios from "axios";
-import { addNewEntry } from "./auth";
+
 
 const APIURL = import.meta.env.VITE_REACT_API_URL;
 
@@ -17,31 +17,6 @@ export const getEntries = (data) => ({
     data,
   },
 });
-
-// export const startGetEntries = (isAuthenticated) => {
-//   return async (dispatch) => {
-//     let response;
-//     try {
-//       if (isAuthenticated) {
-//         const token = localStorage.getItem("token");
-//         response = await axios.get(`${API_BASE_URL}/questions`, {
-//           headers: {
-//             "x-access-token": token,
-//           },
-//         });
-//         console.log(response.data.modifiedQuestions);
-//         dispatch(getEntries(response.data.modifiedQuestions));
-//       } else {
-//         response = await axios.get(
-//           "http://192.168.101.7:8080/api/questions/public"
-//         );
-//         dispatch(getEntries(response.data.questions));
-//       }
-//     } catch (error) {
-//       Promise.reject(error);
-//     }
-//   };
-// };
 
 export const startGetEntries = (isAuthenticated) => {
   return async (dispatch) => {
@@ -64,8 +39,9 @@ const fetchEntries = async (isAuthenticated) => {
   const config = isAuthenticated
     ? {
         headers: { "x-access-token": token },
+        withCredentials: true,
       }
-    : {};
+    : { withCredentials: true };
 
   const endpoint = isAuthenticated
     ? `${APIURL}/questions`
@@ -111,13 +87,13 @@ export const downvoteEntry = (id) => ({
 });
 
 const postEntry = async (values) => {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { "x-access-token": token },
-  };
   const endpoint = `${APIURL}/questions/create`;
-
   try {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { "x-access-token": token },
+    };
+
     return await axios.post(endpoint, values, config);
   } catch (error) {
     console.error("Error in axios.post:", error);
@@ -126,13 +102,56 @@ const postEntry = async (values) => {
 };
 
 export const startNewQuestion = (values) => {
-  console.log(values);
-  return async (dispatch) => {
+  return async () => {
     try {
-      const response = await postEntry(values);
-      dispatch(addNewEntry(response.data));
+      await postEntry(values);
+      // dispatch(addNewEntry(response.data));
     } catch (error) {
       console.error("Error creating entry:", error);
     }
   };
 };
+
+export const startDeleteQuestion = (uid) => {
+  return async (dispatch) => {
+    try {
+      await deleteEntry(uid);
+      dispatch(deleteQuestion(uid));
+    } catch (error) {
+      console.error("Error deleting entry:", error);
+    }
+  };
+};
+
+const deleteEntry = async (uid) => {
+  const endpoint = `${APIURL}/questions/${uid}`;
+  try {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { "x-access-token": token },
+    };
+
+    return await axios.delete(endpoint, config);
+  } catch (error) {
+    console.error("Error in axios.delete:", error);
+    throw error;
+  }
+};
+const deleteQuestion = (uid) => ({
+  type: types.deleteEntry,
+  payload: uid,
+});
+export const setLoading = (isLoading) => ({
+  type: types.setLoading,
+  payload: isLoading,
+});
+
+export const setOptionsClicked = (optionsClicked) => ({
+  type: types.setOptionsClicked,
+  payload: optionsClicked,
+});
+
+export const setNewQuestion = (newQuestion) => ({
+  type: types.setNewQuestion,
+  payload: newQuestion,
+});

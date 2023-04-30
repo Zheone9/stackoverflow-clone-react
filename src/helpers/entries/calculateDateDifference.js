@@ -6,26 +6,21 @@ const calculateDifference = (date) => {
   const years = now.diff(startDate, "years");
   const months = now.diff(startDate, "months");
   const days = now.diff(startDate, "days");
-  const hours = now.diff(startDate, "hours");
-  const minutes = now.diff(startDate, "minutes");
-  const seconds = now.diff(startDate, "seconds");
+  const hours = now.diff(startDate, "hours") % 24; // Calcula las horas restantes después de los días
+  const minutes = now.diff(startDate, "minutes") % 60; // Calcula los minutos restantes después de las horas
 
-  if (seconds < 60) {
-    return `Asked ${seconds} seconds ago`;
-  } else if (minutes < 60) {
-    return `Asked ${minutes} minutes ago`;
-  } else if (hours < 24) {
-    return `Asked ${hours} hours ago`;
-  } else if (days < 30) {
-    return `Asked ${days} days${hours > 0 ? `, ${hours} hours` : ""} ago`;
-  } else if (months < 12) {
-    return `Asked ${months} months${days > 0 ? `, ${days} days` : ""}${
-      hours > 0 ? `, ${hours} hours` : ""
-    } ago`;
+  if (years > 0) {
+    return `Asked ${years} year${years > 1 ? "s" : ""} ago`;
+  } else if (months > 0) {
+    return `Asked ${months} month${months > 1 ? "s" : ""} ago`;
+  } else if (days > 0) {
+    return `Asked ${days} day${days > 1 ? "s" : ""} ago`;
+  } else if (hours > 0) {
+    return `Asked ${hours} hour${hours > 1 ? "s" : ""} ago`;
+  } else if (minutes > 0) {
+    return `Asked ${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   } else {
-    return `Asked ${years} years${months > 0 ? `, ${months} months` : ""}${
-      days > 0 ? `, ${days} days` : ""
-    } ago`;
+    return "Asked just now";
   }
 };
 

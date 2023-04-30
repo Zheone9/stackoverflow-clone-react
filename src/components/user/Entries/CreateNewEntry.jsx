@@ -3,7 +3,6 @@ import { useForm } from "../../../hooks/useForm";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import HCaptcha from "react-hcaptcha";
-import { Navigate } from "react-router-dom";
 import formValidationSchema from "../../../helpers/newQuestion/formValidationSchema";
 import validateForm from "../../../helpers/newQuestion/validateForm";
 import { startNewQuestion } from "../../../actions/entries";
@@ -31,29 +30,22 @@ const CreateNewEntry = () => {
     }
     return null;
   };
-  const [formSent, setFormSent] = useState(false);
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const isValid = validateForm(values);
     console.log(values);
     console.log(isValid);
     if (isValid) {
-      dispatch(startNewQuestion(values));
-
+      await dispatch(startNewQuestion(values));
       resetForm();
       reset();
-
       setSubmitting(false);
-      setFormSent(true);
+      window.location.reload();
+
     } else {
       console.log("invalido");
     }
   };
-  useEffect(() => {
-    if (formSent) {
-      console.log("form sent");
-      window.location.reload();
-    }
-  }, [formSent]);
 
   const handleVerification = (token, setFieldValue) => {
     console.log("Verified: " + token);

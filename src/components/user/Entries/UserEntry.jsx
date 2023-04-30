@@ -2,20 +2,32 @@ import React from "react";
 import UserInfo from "./UserInfo";
 import VotesCounter from "./VotesCounter";
 import calculateDifference from "../../../helpers/entries/calculateDateDifference";
+import BasicMenu from "./BasicMenu";
+import { useSelector } from "react-redux";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
+  const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
+
+  const renderBasicMenu = () => {
+    if (isAuthenticaded) {
+      return (
+        <BasicMenu
+          setOptionsClicked={setOptionsClicked}
+          questionUid={entry.uid}
+          userId={userId}
+          authorId={entry.author.uid}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <div className=" mb-5">
       <div className="div-questionTitle">
         <h1>{entry.title}</h1>
-        {isAuthenticaded && (
-          <i
-            className="fa fa-ellipsis-v three-dots-icon"
-            aria-hidden="true"
-            onClick={() => setOptionsClicked(true)}
-          ></i>
-        )}
+        {renderBasicMenu()}
       </div>
       <div className="question-info">
         <p>{date}</p>

@@ -9,6 +9,9 @@ import {
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 
+
+
+
 const errorMessages = {
   loginFailed: "Login failed. Please check your email and password.",
   googleLoginFailed: "Google login failed.",
@@ -43,9 +46,8 @@ const LoginScreen = () => {
     }
   };
 
-  const handleGoogleLogin = async (clientId, credential) => {
+   const handleGoogleLogin = async (clientId, credential) => {
     const success = await dispatch(startLoginWithGoogle(clientId, credential));
-    dispatch(startLoginWithGoogle(clientId, credential));
     if (success) {
       console.log("Logeo exitoso");
       navigate("/");

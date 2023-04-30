@@ -2,6 +2,9 @@ import { types } from "../types/types";
 
 const initialState = {
   entries: [],
+  isLoading: true,
+  optionsClicked: false,
+  newQuestion: false,
 };
 export const userEntryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,6 +39,18 @@ export const userEntryReducer = (state = initialState, action) => {
         ...state,
         entries: action.payload.data,
       };
+
+    case types.deleteEntry:
+      return {
+        ...state,
+        entries: state.entries.filter((entry) => entry.uid !== action.payload),
+      };
+    case types.setLoading:
+      return { ...state, isLoading: action.payload };
+    case types.setOptionsClicked:
+      return { ...state, optionsClicked: action.payload };
+    case types.setNewQuestion:
+      return { ...state, newQuestion: action.payload };
     default:
       return state;
   }
