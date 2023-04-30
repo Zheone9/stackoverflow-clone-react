@@ -50,7 +50,7 @@ const LoginScreen = () => {
     const success = await dispatch(startLoginWithGoogle(clientId, credential));
     if (success) {
       console.log("Logeo exitoso");
-      navigate("/");
+      // navigate("/");
     } else {
       handleErrors("googleLoginFailed");
     }

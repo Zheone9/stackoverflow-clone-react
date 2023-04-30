@@ -1,17 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../actions/auth";
+import {startHandleLogout} from "../actions/auth";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(logoutUser());
-
-    localStorage.removeItem("token");
+  const handleLogout = async() => {
+   const success=await dispatch(startHandleLogout());
+   if(!success) return console.log('Hubo un error al desloguearse')
     window.location.reload();
   };
 

@@ -35,13 +35,10 @@ export const startGetEntries = (isAuthenticated) => {
   };
 };
 const fetchEntries = async (isAuthenticated) => {
-  const token = localStorage.getItem("token");
-  const config = isAuthenticated
-    ? {
-        headers: { "x-access-token": token },
+  const config = {
         withCredentials: true,
       }
-    : { withCredentials: true };
+
 
   const endpoint = isAuthenticated
     ? `${APIURL}/questions`
@@ -52,10 +49,7 @@ const fetchEntries = async (isAuthenticated) => {
 export const voteEntry = (id, value) => {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        return;
-      }
+
       await axios.patch(
         `${APIURL}/questions/vote`,
         {
@@ -63,9 +57,7 @@ export const voteEntry = (id, value) => {
           vote: value,
         },
         {
-          headers: {
-            "x-access-token": token,
-          },
+         withCredentials:true
         }
       );
       if (value > 0) {
@@ -89,9 +81,8 @@ export const downvoteEntry = (id) => ({
 const postEntry = async (values) => {
   const endpoint = `${APIURL}/questions/create`;
   try {
-    const token = localStorage.getItem("token");
     const config = {
-      headers: { "x-access-token": token },
+      withCredentials:true
     };
 
     return await axios.post(endpoint, values, config);
@@ -105,9 +96,10 @@ export const startNewQuestion = (values) => {
   return async () => {
     try {
       await postEntry(values);
-      // dispatch(addNewEntry(response.data));
+      return true
     } catch (error) {
       console.error("Error creating entry:", error);
+      return false;
     }
   };
 };
@@ -128,7 +120,7 @@ const deleteEntry = async (uid) => {
   try {
     const token = localStorage.getItem("token");
     const config = {
-      headers: { "x-access-token": token },
+     withCredentials:true
     };
 
     return await axios.delete(endpoint, config);
