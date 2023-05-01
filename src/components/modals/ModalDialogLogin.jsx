@@ -1,33 +1,33 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import GoogleLoginButton from "../auth/GoogleLoginButton.jsx";
-import {startLoginWithGoogle} from "../../actions/auth.js";
-import {useDispatch} from "react-redux";
+import { startLoginWithGoogle } from "../../actions/auth.js";
+import { useDispatch } from "react-redux";
 
 const ModalDialogLogin = ({ closeModal, action }) => {
   const handleCloseModal = () => {
     closeModal();
   };
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
-    const handleGoogleLogin = async (clientId, credential) => {
-        const success = await dispatch(startLoginWithGoogle(clientId, credential));
-        if (success) {
-            console.log("Logeo exitoso");
-            window.location.reload()
-        } else {
-            handleErrors("googleLoginFailed");
-        }
-    };
+  const handleGoogleLogin = async (clientId, credential) => {
+    const success = await dispatch(startLoginWithGoogle(clientId, credential));
+    if (success) {
+      console.log("Logeo exitoso");
+      window.location.reload();
+    } else {
+      handleErrors("googleLoginFailed");
+    }
+  };
 
-    const onSuccess = ({ clientId, credential }) => {
-        handleGoogleLogin(clientId, credential);
-    };
+  const onSuccess = ({ clientId, credential }) => {
+    handleGoogleLogin(clientId, credential);
+  };
 
-    const onFailure = (e) => {
-        console.log("Login no exitoso", e);
-    };
+  const onFailure = (e) => {
+    console.log("Login no exitoso", e);
+  };
   return (
     <div className="dialog">
       <h1 className="mb-5">Join the Stack Overflow community </h1>
@@ -36,11 +36,17 @@ const ModalDialogLogin = ({ closeModal, action }) => {
         Join Stack Overflow to start earning reputation and unlocking new
         privileges like voting and commenting.
       </p>
-      <i className="fa-solid fa-xmark close-dialog" onClick={handleCloseModal}></i>
+      <i
+        className="fa-solid fa-xmark close-dialog"
+        onClick={handleCloseModal}
+      ></i>
       <div className="dialog-div-login-buttons">
         <div className="div-login-buttons mt-5 mb-5">
-
-              <GoogleLoginButton onSuccess={onSuccess} onFailure={onFailure} theme="outline"/>
+          <GoogleLoginButton
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            theme="outline"
+          />
           <Link to="/auth/login">
             <button className="pointer mt-1">
               <i className="fa-solid fa-envelope"></i>
@@ -49,7 +55,6 @@ const ModalDialogLogin = ({ closeModal, action }) => {
           </Link>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };

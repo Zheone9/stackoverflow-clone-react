@@ -1,71 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
 import {
-  startLoginEmailPassword,
+  startLoginUsernamePassword,
   startLoginWithGoogle,
 } from "../../actions/auth";
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
-
-
-
-
-const errorMessages = {
-  loginFailed: "Login failed. Please check your email and password.",
-  googleLoginFailed: "Google login failed.",
-};
+import CustomFormik from "../CustomFormik.jsx";
+import { loginFormSchema } from "../../helpers/formValidation/formSchema.js";
 
 const LoginScreen = () => {
-  const [formValues, handleInputChange] = useForm({
-    email: "jajassddasss2@gmail.com",
-    password: "123456",
-  });
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    console.log(error);
-  }, [setError]);
-
-  const handleErrors = (errorType) => {
-    setError(errorMessages[errorType]);
-  };
   const dispatch = useDispatch();
-  const { email, password } = formValues;
+  const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState(null);
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+    const { success, errorMsg } = await dispatch(
+      startLoginUsernamePassword(username, password)
+    );
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const success = await dispatch(startLoginEmailPassword(email, password));
-    if (success) {
-      console.log("Logeo exitoso");
-      navigate("/");
+    if (!success) {
+      setErrorMsg(errorMsg);
     } else {
-      handleErrors("loginFailed");
+      console.log("Logeo exitoso");
+      return navigate("/");
     }
   };
 
-   const handleGoogleLogin = async (clientId, credential) => {
+  const onSuccess = async ({ clientId, credential }) => {
     const success = await dispatch(startLoginWithGoogle(clientId, credential));
     if (success) {
       console.log("Logeo exitoso");
-      // navigate("/");
-    } else {
-      handleErrors("googleLoginFailed");
+      return navigate("/");
     }
   };
-
-  const onSuccess = ({ clientId, credential }) => {
-    handleGoogleLogin(clientId, credential);
-  };
-
+  const fields = [
+    {
+      label: "Username",
+      name: "username",
+      type: "text",
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "password",
+    },
+  ];
   const onFailure = (e) => {
     console.log("Login no exitoso", e);
   };
 
   return (
-    <div className=" container-login animate__animated animate__fadeIn">
+    <div className="container-login animate__animated animate__fadeIn">
       <div className="div-logo">
         <Link to="/">
           <img
@@ -79,38 +66,23 @@ const LoginScreen = () => {
           <GoogleLoginButton onSuccess={onSuccess} onFailure={onFailure} />
         </div>
         <div className="div-login">
-          <form action="">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={email}
-                className="form-control"
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                value={password}
-                name="password"
-                onChange={handleInputChange}
-                id="password"
-                className="form-control"
-              />
-            </div>
-            <div className="div-btn-login">
-              <button onClick={handleLogin}>Log in</button>
-            </div>
-            {error && <p className="p-error-message">{error}</p>}
-          </form>
+          <CustomFormik
+            initialValues={{ username: "", password: "" }}
+            validationSchema={loginFormSchema}
+            onSubmit={(values) => onSubmit(values)}
+            fields={fields}
+            submitButton={
+              <div className="div-btn-login">
+                <button className="btn btn-primary" type="submit">
+                  Login
+                </button>
+              </div>
+            }
+          />
+          {errorMsg && <p className="p-error-message">{errorMsg}</p>}
         </div>
       </div>
-      <div className="mt-5 text-center">
+      <div className="mt-5 mb-5 text-center">
         Don’t have an account?{" "}
         <Link to="/auth/register" className="link">
           Sign up

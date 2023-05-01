@@ -1,30 +1,40 @@
 .container-register {
-  background-color: darken($color: #ffffff, $amount: 5);
-  padding-left: 1.3em;
-  padding-right: 1.3em;
-  padding-top: 1.3em;
-  display: flex; /* Añadido */
-  align-items: center; /* Añadido */
-  justify-content: center;
-  height: 100vh;
-  z-index: 10;
-  // max-width: 800px;
+  //background-color: darken($color: #ffffff, $amount: 5);
+  display: flex;
+  margin: auto;
+}
+
+.p-error-message-input {
+  color: red;
+  font-size: 0.8rem;
+  margin-bottom: 0;
+  text-align: center;
+
 }
 
 .div-info {
   display: none;
+
 }
 
 .div-register {
   background-color: white;
-  padding: 1.25em;
+  padding: 1.25rem;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
-@media screen and (min-width: 884px) {
-  .div-info {
+@media screen and (max-width: 884px) {
+  .container-register {
     display: block;
+  }
+}
+
+@media screen and (min-width: 885px) {
+  .div-info {
+    display: flex;
+    align-items: center;
+    max-height: 472.26px;
   }
 }
 
@@ -45,10 +55,3 @@
     width: auto;
   }
 }
-
-// @media screen and (min-width: 1000px) {
-//   .div-register {
-//     flex-basis: 80%;
-//     flex-grow: 2;
-//   }
-// }

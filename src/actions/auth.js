@@ -1,5 +1,6 @@
 import { types } from "../types/types";
 import axios from "axios";
+
 const APIURL = import.meta.env.VITE_REACT_API_URL;
 
 export const logoutUser = () => {
@@ -18,20 +19,24 @@ export const login = ({ uid, username }) => {
   };
 };
 
-export const startLoginEmailPassword = (email, password) => {
+export const startLoginUsernamePassword = (username, password) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${APIURL}/auth`, {
-        email,
-        password,
-      },{
-        withCredentials:true
-      });
+      const response = await axios.post(
+        `${APIURL}/auth`,
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       dispatch(login(response.data.payload));
-      return true;
+      return { success: true, errorMsg: null };
     } catch (error) {
-      return false;
+      return { success: false, errorMsg: error.response.data.message };
     }
   };
 };
@@ -45,9 +50,9 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
           id_token: tokenId,
           clientId,
         },
-          {
-            withCredentials:true
-          }
+        {
+          withCredentials: true,
+        }
       );
       dispatch(login(response.data.payload));
       return true;
@@ -61,46 +66,49 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
 export const startRegisterWithEmail = (username, email, password) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${APIURL}/auth/new`, {
-        username,
-        email,
-        password,
-      },{
-        withCredentials:true
-      });
+      console.log(username, email, password);
+      const response = await axios.post(
+        `${APIURL}/auth/new`,
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(login(response.data.payload));
       return {
         success: true,
-        error: null,
+        errorMsg: null,
       };
     } catch (error) {
       // dispatch({ type: LOGIN_WITH_GOOGLE_FAILURE, payload: error.response.data.message });
-      console.log(error);
+
       return {
         success: false,
-        error: error.response.data.error,
+        errorMsg: error.response.data.message,
       };
     }
   };
 };
 
-export const startHandleLogout=()=> {
-    return async(dispatch)=>{
-      try {
-        // Llamar al endpoint de deslogueo de la API para eliminar la cookie JWT
-        const response = await axios.post(`${APIURL}/auth/logout`,null,{
-          withCredentials:true
-        });
-        if (response.status === 200) {
-          console.log('Logout successful');
-          dispatch(logoutUser())
-          return true;
-
-        }
-      } catch (error) {
-        console.error('Error during logout:', error);
-        return false;
+export const startHandleLogout = () => {
+  return async (dispatch) => {
+    try {
+      // Llamar al endpoint de deslogueo de la API para eliminar la cookie JWT
+      const response = await axios.post(`${APIURL}/auth/logout`, null, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        console.log("Logout successful");
+        dispatch(logoutUser());
+        return true;
       }
+    } catch (error) {
+      console.error("Error during logout:", error);
+      return false;
     }
-
-  }
+  };
+};

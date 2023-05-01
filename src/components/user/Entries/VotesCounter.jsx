@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  downvoteEntry,
-  upvoteEntry,
   voteEntry,
 } from "../../../actions/entries";
 import Modal from "react-modal";
@@ -12,7 +10,9 @@ import { getCustomStyles } from "../modalStyles";
 
 const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
   useEffect(() => {
+    console.log('Efecto ejecutado, isAuthenticated:', isAuthenticated);
     if (!isAuthenticated) {
       if (btnUpvote.current.classList.contains("green")) {
         btnUpvote.current.classList.remove("green");
@@ -27,9 +27,9 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
         btnDownvote.current.classList.add("red");
       }
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated,voted]);
 
-  const dispatch = useDispatch();
+
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const [action, setAction] = useState("");

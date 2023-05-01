@@ -9,7 +9,7 @@
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 
 .new-question-container h2 {
@@ -78,6 +78,7 @@ button:hover:not(:disabled) {
 .submit-button:hover:not(:disabled) {
   background-color: #449d44;
 }
+
 /* En FormStyles.css */
 .submit-button:disabled {
   // transition: none;
@@ -86,30 +87,12 @@ button:hover:not(:disabled) {
 
 /* ... (otras reglas CSS) ... */
 
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  box-sizing: border-box;
-  background-color: #f8f8f8;
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-textarea:focus {
-  border-color: #3bafda;
-  box-shadow: 0 0 0 1px #3bafda;
-  background-color: #ffffff;
-}
 
 textarea {
   min-height: 150px;
   resize: none; /* Deshabilita el cambio de tamaño */
 }
+
 .ErrorMessage {
   display: inline-block;
   font-size: 0.9rem;
@@ -121,13 +104,15 @@ textarea {
 }
 
 .div-submit-form {
-  margin-top: 1.7em;
+  margin-top: 1.7rem;
   display: flex;
   justify-content: center;
 }
+
 #h-captcha {
-  margin-top: 1.6em;
+  margin-top: 1.6rem;
 }
+
 .submit-button {
   width: 60%;
 }

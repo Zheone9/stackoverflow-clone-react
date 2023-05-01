@@ -1,16 +1,18 @@
 .div-votesCounter {
-  margin-right: 25px;
+  margin-right: 1.5625rem;
 
   i {
     font-size: 3rem;
     color: $light-grey;
     cursor: pointer;
   }
+
   .div-votesCounterNumber {
     font-size: 2.2rem;
     color: $dark-grey;
     margin: 0 10px 0 10px;
   }
+
   .div-votesCounterDown,
   .div-votesCounterUp {
     text-align: center;

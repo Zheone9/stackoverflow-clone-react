@@ -1,18 +1,7 @@
-.form-group input {
-  width: 100%;
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-}
 
 .div-login {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  padding: 20px;
+  padding: 1.25rem;
   background-color: white;
   border-radius: 10px;
   z-index: 10;
@@ -21,9 +10,8 @@
 form button {
   background-color: $dark-blue;
   color: white;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -31,28 +19,30 @@ form button {
 .img-google {
   width: 15px;
   height: 15px;
-  margin-right: 4px;
+  margin-right: 0.25rem;
 }
 
-form .div-btn-login {
+.div-btn-login {
   text-align: center;
+
   button {
     width: 100%;
   }
 }
 
-.form-group input:focus {
-  outline: none;
-  border: 1px solid $dark-blue;
+.form-group {
+  padding-bottom: 1rem;
 }
 
 .div-login-buttons {
   display: flex;
   justify-content: center;
+
   button {
     background-color: white;
     color: black;
-    padding: 0.75em 1.25em;
+    padding: 0.75rem 1.25rem;
+    margin: 0 auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
@@ -60,25 +50,24 @@ form .div-btn-login {
 }
 
 .container-login {
-  height: 100vh;
-  padding-top: 1.7em;
-  background-color: darken($color: #ffffff, $amount: 5);
-  padding-left: 1.3em;
-  padding-right: 1.5em;
-  z-index: 10;
-  // width: 100%;
+  margin: auto;
+
+  //background-color: darken($color: #ffffff, $amount: 5);
+
 }
 
 .div-logo {
   display: flex;
   justify-content: center;
   width: 100%;
+
   img {
     cursor: pointer;
     width: 50px;
     height: 50px;
   }
 }
+
 label {
   font-weight: 600;
   font-family: inherit;
@@ -87,12 +76,13 @@ label {
 .div-login-buttons button:hover {
   background-color: darken($color: #ffffff, $amount: 3);
 }
+
 form button:hover {
   background-color: darken($color: $dark-blue, $amount: 5);
 }
 
 @media (min-width: 468px) {
-  form .div-btn-login {
+  .div-btn-login {
     button {
       width: auto;
     }
@@ -110,3 +100,5 @@ form button:hover {
     width: 500px;
   }
 }
+
+

@@ -1,6 +1,6 @@
 import { types } from "../types/types";
 import axios from "axios";
-
+import { logoutUser, startHandleLogout } from "./auth.js";
 
 const APIURL = import.meta.env.VITE_REACT_API_URL;
 
@@ -29,16 +29,26 @@ export const startGetEntries = (isAuthenticated) => {
             : response.data.questions
         )
       );
+      return {
+        success: true,
+        errorMsg: null,
+      };
     } catch (error) {
+      if (isAuthenticated) {
+        await dispatch(startHandleLogout());
+      }
       console.error("Error fetching entries:", error);
+      return {
+        success: false,
+        errorMsg: error.response.data.message,
+      };
     }
   };
 };
 const fetchEntries = async (isAuthenticated) => {
   const config = {
-        withCredentials: true,
-      }
-
+    withCredentials: true,
+  };
 
   const endpoint = isAuthenticated
     ? `${APIURL}/questions`
@@ -49,7 +59,6 @@ const fetchEntries = async (isAuthenticated) => {
 export const voteEntry = (id, value) => {
   return async (dispatch) => {
     try {
-
       await axios.patch(
         `${APIURL}/questions/vote`,
         {
@@ -57,7 +66,7 @@ export const voteEntry = (id, value) => {
           vote: value,
         },
         {
-         withCredentials:true
+          withCredentials: true,
         }
       );
       if (value > 0) {
@@ -82,7 +91,7 @@ const postEntry = async (values) => {
   const endpoint = `${APIURL}/questions/create`;
   try {
     const config = {
-      withCredentials:true
+      withCredentials: true,
     };
 
     return await axios.post(endpoint, values, config);
@@ -96,7 +105,7 @@ export const startNewQuestion = (values) => {
   return async () => {
     try {
       await postEntry(values);
-      return true
+      return true;
     } catch (error) {
       console.error("Error creating entry:", error);
       return false;
@@ -118,9 +127,8 @@ export const startDeleteQuestion = (uid) => {
 const deleteEntry = async (uid) => {
   const endpoint = `${APIURL}/questions/${uid}`;
   try {
-    const token = localStorage.getItem("token");
     const config = {
-     withCredentials:true
+      withCredentials: true,
     };
 
     return await axios.delete(endpoint, config);
