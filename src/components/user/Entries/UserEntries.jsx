@@ -36,18 +36,8 @@ const UserEntries = () => {
 
   useEffect(() => {
     const loadEntries = async () => {
-      const { success, errorMsg } = await dispatch(
-        startGetEntries(isAuthenticaded)
-      );
+      await dispatch(startGetEntries(isAuthenticaded));
       dispatch(setLoading(false));
-
-      if (isAuthenticaded && !success) {
-        console.log(errorMsg);
-        // return navigate("/auth/login")
-      }
-      if (!success) {
-        setError(errorMsg);
-      }
     };
     loadEntries();
   }, [isAuthenticaded, dispatch]);

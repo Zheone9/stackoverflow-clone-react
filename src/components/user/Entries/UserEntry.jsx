@@ -2,21 +2,48 @@ import React from "react";
 import UserInfo from "./UserInfo";
 import VotesCounter from "./VotesCounter";
 import calculateDifference from "../../../helpers/entries/calculateDateDifference";
-import BasicMenu from "./BasicMenu";
-import { useSelector } from "react-redux";
+import OptionsMenuEntry from "./OptionsMenuEntry.jsx";
+import { useSelector, useDispatch } from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FlagIcon from "@mui/icons-material/Flag";
+import { startDeleteQuestion } from "../../../actions/entries.js";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
   const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
+  const dispatch = useDispatch();
+  const handleDeleteQuestion = async () => {
+    await dispatch(startDeleteQuestion(entry.uid));
+  };
+
+  const menuItems = [
+    {
+      text: "Delete question",
+      Icon: DeleteIcon,
+      iconStyle: {
+        color: "red", // Cambia el color del ícono
+        fontSize: "1.7rem", // Cambia el tamaño del ícono
+      },
+      onClick: () => handleDeleteQuestion(),
+      condition: (authorId, userId) => authorId === userId,
+    },
+    {
+      text: "Report question",
+      Icon: FlagIcon,
+      onClick: () => {
+        console.log("Report question clicked");
+      },
+    },
+  ];
 
   const renderBasicMenu = () => {
     if (isAuthenticaded) {
       return (
-        <BasicMenu
+        <OptionsMenuEntry
           setOptionsClicked={setOptionsClicked}
-          questionUid={entry.uid}
           userId={userId}
           authorId={entry.author.uid}
+          menuItems={menuItems}
         />
       );
     }

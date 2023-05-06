@@ -12,10 +12,6 @@ const handleHCaptchaVerify = async (token) => {
   });
 
   // Procesa la respuesta del backend
-  if (response.ok) {
-    return true;
-  } else {
-    return false;
-  }
+  return response.ok;
 };
 export default handleHCaptchaVerify;

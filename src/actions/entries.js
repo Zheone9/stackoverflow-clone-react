@@ -21,6 +21,7 @@ export const getEntries = (data) => ({
 export const startGetEntries = (isAuthenticated) => {
   return async (dispatch) => {
     try {
+      console.log("a");
       const response = await fetchEntries(isAuthenticated);
       dispatch(
         getEntries(
@@ -36,6 +37,7 @@ export const startGetEntries = (isAuthenticated) => {
     } catch (error) {
       if (isAuthenticated) {
         await dispatch(startHandleLogout());
+        await dispatch(startGetEntries(false));
       }
       console.error("Error fetching entries:", error);
       return {
