@@ -104,6 +104,7 @@ export const startHandleLogout = () => {
       if (response.status === 200) {
         console.log("Logout successful");
         dispatch(logoutUser());
+
         return true;
       }
     } catch (error) {

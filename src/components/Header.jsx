@@ -1,17 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {startHandleLogout} from "../actions/auth";
+import { logoutUser, startHandleLogout } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
+import AccountMenu from "./user/AccountMenu.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { username } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  const handleLogout = async() => {
-   const success=await dispatch(startHandleLogout());
-   if(!success) return console.log('Hubo un error al desloguearse')
-    window.location.reload();
+  const handleLogout = async () => {
+    const success = await dispatch(startHandleLogout());
+    if (!success) return console.log("Hubo un error al desloguearse");
+    navigate("/");
   };
 
   return (
@@ -21,7 +23,8 @@ const Header = () => {
           src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1682289016/stackoverflow_project_assets/Stack_Overflow_logo_szqi3b.svg"
           onClick={() => navigate("/")}
           className="img-stackoverflow"
-         alt=""/>
+          alt=""
+        />
 
         <img
           src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1682289016/stackoverflow_project_assets/stackoverflow_ewuyb6.png"
@@ -32,9 +35,10 @@ const Header = () => {
 
         <div className="div-buttons">
           {isAuthenticated ? (
-            <button className="btn btn-secondary" onClick={handleLogout}>
-              Log out
-            </button>
+            <AccountMenu
+              handleLogout={handleLogout}
+              usernameLetter={username[0].toUpperCase()}
+            />
           ) : (
             <>
               <Link to="/auth/login">

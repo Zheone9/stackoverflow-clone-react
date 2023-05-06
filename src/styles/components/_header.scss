@@ -2,13 +2,14 @@ header {
   background: darken($color: white, $amount: 3);
   height: 70px;
   box-shadow: 0 1.5px 3px hsla(0, 0%, 0%, 0.05),
-    0 1.5px 6px hsla(0, 0%, 0%, 0.05), 0 3px 12px hsla(0, 0%, 0%, 0.05);
+  0 1.5px 6px hsla(0, 0%, 0%, 0.05), 0 3px 12px hsla(0, 0%, 0%, 0.05);
   z-index: 999999999;
   top: 0;
   left: 0;
 
 }
-.div-buttons button {
+
+.div-buttons .btn {
   width: 5rem;
 }
 
@@ -22,11 +23,16 @@ header {
     display: none;
   }
 }
+
 @media screen and (max-width: 677px) {
   .img-stackoverflow {
     display: none;
   }
 }
+
+//.div-buttons {
+//  display: flex;
+//}
 
 .container-header {
   display: flex; /* Agregar esta línea */

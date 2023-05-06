@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLoading,
@@ -8,7 +8,6 @@ import {
 } from "../../../actions/entries";
 import EntriesList from "./EntriesList";
 import NewEntry from "./NewEntry";
-import { useNavigate } from "react-router-dom";
 
 const UserEntries = () => {
   const { entries, isLoading, optionsClicked, newQuestion } = useSelector(
@@ -16,7 +15,7 @@ const UserEntries = () => {
   );
   const isAuthenticaded = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const sortedEntries = [...entries].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -32,8 +31,6 @@ const UserEntries = () => {
     console.log(optionsClicked);
   }, [optionsClicked]);
 
-  const [error, setError] = useState(null);
-
   useEffect(() => {
     const loadEntries = async () => {
       await dispatch(startGetEntries(isAuthenticaded));
@@ -44,7 +41,6 @@ const UserEntries = () => {
 
   return (
     <main>
-      {error}
       <div className="container-entries p-5">
         <NewEntry
           newQuestion={newQuestion}

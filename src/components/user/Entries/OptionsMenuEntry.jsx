@@ -7,6 +7,7 @@ const OptionsMenuEntry = ({ setOptionsClicked, menuItems, ...otherProps }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const { authorId, userId } = otherProps;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,19 +50,31 @@ const OptionsMenuEntry = ({ setOptionsClicked, menuItems, ...otherProps }) => {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{
+          borderRadius: "0px",
+        }}
       >
         {menuItems.map(
           (item, index) =>
             // Evalúa la condición aquí, si no existe, muestra el elemento por defecto
             (!item.condition || item.condition(authorId, userId)) && (
               <MenuItem
+                sx={{
+                  fontSize: "0.8rem",
+                  borderRadius: "10px",
+                  color: "#4B4B4B",
+                }}
                 key={index}
                 onClick={() => {
                   item.onClick();
                   handleClose();
                 }}
               >
-                <item.Icon />
+                <item.Icon
+                  style={{
+                    color: item.iconStyle && item.iconStyle.color,
+                  }}
+                />
                 {item.text}
               </MenuItem>
             )
