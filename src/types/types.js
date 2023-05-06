@@ -9,4 +9,5 @@ export const types = {
   setOptionsClicked: "[Entry] SetOptionsClicked",
   setNewQuestion: "[Entry] SetNewQuestion",
   deleteEntry: "[Entry] Delete Entry",
+  toggleSidebar: "[Sidebar] Toggle",
 };

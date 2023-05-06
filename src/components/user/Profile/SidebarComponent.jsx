@@ -1,75 +1,143 @@
-import React from "react";
-import { MailOutlined, SettingOutlined } from "@ant-design/icons";
-import { Menu } from "antd";
+import React, { useState } from "react";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
-
-const items = [
-  getItem("Navigation One", "sub1", <MailOutlined />, [
-    getItem(
-      "Item 1",
-      "g1",
-      null,
-      [getItem("Option 1", "1"), getItem("Option 2", "2")],
-      "group"
-    ),
-    getItem(
-      "Item 2",
-      "g2",
-      null,
-      [getItem("Option 3", "3"), getItem("Option 4", "4")],
-      "group"
-    ),
-  ]),
-  getItem("Navigation Two", "sub2", null, [
-    getItem("Option 5", "5"),
-    getItem("Option 6", "6"),
-    {
-      key: "sub3",
-      label: "Submenu",
-      icon: null,
-      type: null,
-      children: [getItem("Option 7", "7"), getItem("Option 8", "8")],
+const themes = {
+  light: {
+    sidebar: {
+      backgroundColor: "#ffffff",
+      color: "#607489",
     },
-  ]),
-  {
-    type: "divider",
+    menu: {
+      menuContent: "#fbfcfd",
+      icon: "#0098e5",
+      hover: {
+        backgroundColor: "#c5e4ff",
+        color: "#44596e",
+      },
+      disabled: {
+        color: "#9fb6cf",
+      },
+    },
   },
-  getItem("Navigation Three", "sub4", <SettingOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
-  getItem(
-    "Group",
-    "grp",
-    null,
-    [getItem("Option 13", "13"), getItem("Option 14", "14")],
-    "group"
-  ),
-];
+  dark: {
+    sidebar: {
+      backgroundColor: "#0b2948",
+      color: "#8ba1b7",
+    },
+    menu: {
+      menuContent: "#082440",
+      icon: "#59d0ff",
+      hover: {
+        backgroundColor: "#00458b",
+        color: "#b6c8d9",
+      },
+      disabled: {
+        color: "#3e5e7e",
+      },
+    },
+  },
+};
+const sidebarClasses = {
+  root: "ps-sidebar-root",
+  container: "ps-sidebar-container",
+  image: "ps-sidebar-image",
+  backdrop: "ps-sidebar-backdrop",
+  collapsed: "ps-collapsed",
+  toggled: "ps-toggled",
+  rtl: "ps-rtl",
+  broken: "ps-broken",
+};
+const menuClasses = {
+  root: "ps-menu-root",
+  menuItemRoot: "ps-menuitem-root",
+  subMenuRoot: "ps-submenu-root",
+  button: "ps-menu-button",
+  prefix: "ps-menu-prefix",
+  suffix: "ps-menu-suffix",
+  label: "ps-menu-label",
+  icon: "ps-menu-icon",
+  subMenuContent: "ps-submenu-content",
+  SubMenuExpandIcon: "ps-submenu-expand-icon",
+  disabled: "ps-disabled",
+  active: "ps-active",
+  open: "ps-open",
+};
+const hexToRgba = (hex, alpha) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
 
-const Sidebar = () => {
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const SidebarPro = () => {
+  const [theme, setTheme] = useState("light");
+  const handleThemeChange = (e) => {
+    setTheme(e.target.checked ? "dark" : "light");
+  };
+  const [hasImage, setHasImage] = useState(false);
+  const menuItemStyles = {
+    root: {
+      fontSize: "13px",
+      fontWeight: 400,
+    },
+    icon: {
+      color: themes[theme].menu.icon,
+      [`&.${menuClasses.disabled}`]: {
+        color: themes[theme].menu.disabled.color,
+      },
+    },
+    SubMenuExpandIcon: {
+      color: "#b6b7b9",
+    },
+    subMenuContent: ({ level }) => ({
+      backgroundColor:
+        level === 0
+          ? hexToRgba(
+              themes[theme].menu.menuContent,
+              hasImage && !collapsed ? 0.4 : 1
+            )
+          : "transparent",
+    }),
+    button: {
+      [`&.${menuClasses.disabled}`]: {
+        color: themes[theme].menu.disabled.color,
+      },
+      "&:hover": {
+        backgroundColor: hexToRgba(
+          themes[theme].menu.hover.backgroundColor,
+          hasImage ? 0.8 : 1
+        ),
+        color: themes[theme].menu.hover.color,
+      },
+    },
+    label: ({ open }) => ({
+      fontWeight: open ? 600 : undefined,
+    }),
+  };
   return (
-    <Menu
-      style={{
-        width: 256,
+    <Sidebar
+      customBreakPoint="768px"
+      className="sidedar-profile"
+      closeOnClick="true"
+      backgroundColor={hexToRgba(
+        themes[theme].sidebar.backgroundColor,
+        hasImage ? 0.9 : 1
+      )}
+      rootStyles={{
+        color: themes[theme].sidebar.color,
       }}
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["sub1"]}
-      mode="inline"
-      items={items}
-    />
+    >
+      <Menu>
+        <SubMenu label="Charts">
+          <MenuItem> Pie charts </MenuItem>
+          <MenuItem> Line charts </MenuItem>
+        </SubMenu>
+        <MenuItem> Documentation </MenuItem>
+        <MenuItem> Calendar </MenuItem>
+      </Menu>
+    </Sidebar>
   );
 };
 
-export default Sidebar;
+export default SidebarPro;

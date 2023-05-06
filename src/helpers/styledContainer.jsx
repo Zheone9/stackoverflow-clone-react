@@ -1,13 +1,12 @@
 import { useLocation } from "react-router-dom";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 const StyledContainer = ({ children }) => {
   const location = useLocation();
-  const pathsBackgroundGrey = ["/auth/login", "/auth/register"];
-
-
+  const routeLocation = location.pathname.split("/")[1];
+  const isProfileRoute = routeLocation === "profile";
   useEffect(() => {
-    if (pathsBackgroundGrey.includes(location.pathname)) {
+    if ("auth" === routeLocation) {
       document.body.style.backgroundColor = "#F2F2F2"; // Establecer el color de fondo del body
     } else {
       document.body.style.backgroundColor = ""; // Restablecer el color de fondo del body al estilo predeterminado
@@ -19,7 +18,7 @@ const StyledContainer = ({ children }) => {
     };
   }, [location.pathname]);
   return (
-    <div className="container" >
+    <div className={`container${isProfileRoute ? " no-padding" : ""}`}>
       {children}
     </div>
   );

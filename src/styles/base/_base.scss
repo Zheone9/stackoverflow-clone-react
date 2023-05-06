@@ -12,6 +12,10 @@ body {
   overflow-x: hidden;
 }
 
+.container.no-padding {
+  padding: 0;
+}
+
 .mt-1 {
   margin-top: 0.3125rem;
 }
@@ -80,6 +84,10 @@ body {
   align-items: flex-start; /* Añadido */
   height: calc(100vh - 80px);
 
+}
+
+.p-4 {
+  padding: 10px;
 }
 
 .p-error-message {
