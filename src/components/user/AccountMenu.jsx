@@ -10,10 +10,12 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import * as React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const AccountMenu = ({ handleLogout, usernameLetter }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -74,9 +76,14 @@ const AccountMenu = ({ handleLogout, usernameLetter }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            navigate("/profile/dashboard");
+          }}
+        >
           <Avatar /> Profile
         </MenuItem>
+
         <MenuItem onClick={handleClose}>
           <Avatar /> My account
         </MenuItem>

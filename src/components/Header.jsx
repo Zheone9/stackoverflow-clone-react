@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { logoutUser, startHandleLogout } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
 import AccountMenu from "./user/AccountMenu.jsx";
+import { selectUsername } from "../helpers/header/selectUsername.js";
 
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const { username } = useSelector((state) => state.auth.user);
+  const username = useSelector(selectUsername);
   const dispatch = useDispatch();
   const handleLogout = async () => {
     const success = await dispatch(startHandleLogout());
