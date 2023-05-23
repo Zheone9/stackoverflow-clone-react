@@ -1,7 +1,12 @@
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 
-const GoogleLoginButton = ({ onSuccess, onFailure, text,theme="filled_blue" }) => {
+const GoogleLoginButton = ({
+  onSuccess,
+  onFailure,
+  text,
+  theme = "filled_blue",
+}) => {
   return (
     <GoogleLogin
       onSuccess={onSuccess}

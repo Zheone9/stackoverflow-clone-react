@@ -3,17 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import { logoutUser, startHandleLogout } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
 import AccountMenu from "./user/AccountMenu.jsx";
-import { selectUsername } from "../helpers/header/selectUsername.js";
+import {
+  selectPicture,
+  selectUsername,
+} from "../helpers/header/selectUsername.js";
 import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useProSidebar } from "react-pro-sidebar";
+import AuthenticatedUserMenu from "./user/AuthenticatedUserMenu.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const username = useSelector(selectUsername);
+  const picture = useSelector(selectPicture);
   const dispatch = useDispatch();
   const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
   const handleLogout = async () => {
@@ -56,21 +61,12 @@ const Header = () => {
         </div>
 
         <div className="div-buttons">
-          {isAuthenticated ? (
-            <AccountMenu
-              handleLogout={handleLogout}
-              usernameLetter={username[0].toUpperCase()}
-            />
-          ) : (
-            <>
-              <Link to="/auth/login">
-                <button className="btn btn-secondary">Log in</button>
-              </Link>
-              <Link to="/auth/register">
-                <button className="btn btn-primary">Sign up</button>
-              </Link>
-            </>
-          )}
+          <AuthenticatedUserMenu
+            isAuthenticated={isAuthenticated}
+            picture={picture}
+            username={username}
+            handleLogout={handleLogout}
+          />
         </div>
       </div>
     </header>

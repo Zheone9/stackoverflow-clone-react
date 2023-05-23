@@ -12,7 +12,7 @@ import Logout from "@mui/icons-material/Logout";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const AccountMenu = ({ handleLogout, usernameLetter }) => {
+const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -37,7 +37,17 @@ const AccountMenu = ({ handleLogout, usernameLetter }) => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{usernameLetter}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+              {picture ? (
+                <img
+                  src={picture}
+                  style={{ width: "32px" }}
+                  alt="imagen perfil"
+                ></img>
+              ) : (
+                usernameLetter
+              )}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -81,12 +91,9 @@ const AccountMenu = ({ handleLogout, usernameLetter }) => {
             navigate("/profile/dashboard");
           }}
         >
-          <Avatar /> Profile
+          <Avatar src={picture} /> My account
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>

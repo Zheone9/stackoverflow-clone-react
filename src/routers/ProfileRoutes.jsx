@@ -6,9 +6,7 @@ const ProfileRoutes = () => {
   return (
     <div className="container-profile-section">
       <SidebarComponent />
-      <div className="p-4">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

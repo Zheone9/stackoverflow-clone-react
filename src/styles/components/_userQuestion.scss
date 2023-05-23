@@ -14,6 +14,20 @@ main {
   height: calc(100vh);
 }
 
+.h3-set-username {
+  color: darken($dark-blue, 13);
+}
+
+.div-logout-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-icon-main {
+  color: $middle-blue !important;
+}
+
 .div-questionBody {
   display: flex;
   align-items: center;

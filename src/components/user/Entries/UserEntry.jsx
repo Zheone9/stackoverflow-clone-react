@@ -7,11 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlagIcon from "@mui/icons-material/Flag";
 import { startDeleteQuestion } from "../../../actions/entries.js";
+import { selectPicture } from "../../../helpers/header/selectUsername.js";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
   const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
   const dispatch = useDispatch();
+  const picture = useSelector(selectPicture);
   const handleDeleteQuestion = async () => {
     await dispatch(startDeleteQuestion(entry.uid));
   };
@@ -51,7 +53,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   };
 
   return (
-    <div className=" mb-5">
+    <div className="mb-5">
       <div className="div-questionTitle">
         <h1>{entry.title}</h1>
         {renderBasicMenu()}
@@ -68,7 +70,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
         <p>{entry.body}</p>
       </div>
       <div className="div-userInfo">
-        <UserInfo author={entry.author} date={entry.date} />
+        <UserInfo author={entry.author} date={entry.date} picture={picture} />
       </div>
     </div>
   );

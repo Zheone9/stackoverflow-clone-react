@@ -32,3 +32,10 @@ export const registerFormSchema = Yup.object({
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Confirm Password is required"),
 });
+
+export const changeUsernameFormSchema = Yup.object({
+  username: Yup.string()
+    .min(6, "Username must be at least 6 characters ")
+    .max(10, "Username must be 10 or fewer characters long")
+    .required("Username is required"),
+});

@@ -1,10 +1,45 @@
 .container-profile-section {
   display: flex;
-  width: 100%;
-  max-width: 1400px;
+  //max-width: 1400px;
+  width: 1400px;
+}
+
+.container-change-username {
+  padding: 20px;
 }
 
 .sidedar-profile {
   height: 100vh;
 
+}
+
+
+.ps-menu-button {
+  &:hover {
+    background-color: #c5e4ff !important;
+  }
+
+}
+
+.active {
+  background-color: $middle-blue;
+  color: white;
+
+  &:hover {
+    background-color: $middle-blue !important;
+    color: white !important;
+  }
+}
+
+.active:hover {
+  background-color: $middle-blue !important;
+  color: white !important;
+}
+
+@media screen and (max-width: 768px) {
+  .container-change-username {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 }

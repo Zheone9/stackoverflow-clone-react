@@ -1,6 +1,5 @@
 import { types } from "../types/types";
 import axios from "axios";
-import { logoutUser, startHandleLogout } from "./auth.js";
 
 const APIURL = import.meta.env.VITE_REACT_API_URL;
 
@@ -18,27 +17,16 @@ export const getEntries = (data) => ({
   },
 });
 
-export const startGetEntries = (isAuthenticated) => {
+export const startGetEntries = (userId) => {
   return async (dispatch) => {
     try {
-      console.log("a");
-      const response = await fetchEntries(isAuthenticated);
-      dispatch(
-        getEntries(
-          isAuthenticated
-            ? response.data.modifiedQuestions
-            : response.data.questions
-        )
-      );
+      const response = await fetchEntries(userId);
+      dispatch(getEntries(response.data.questions));
       return {
         success: true,
         errorMsg: null,
       };
     } catch (error) {
-      if (isAuthenticated) {
-        await dispatch(startHandleLogout());
-        await dispatch(startGetEntries(false));
-      }
       console.error("Error fetching entries:", error);
       return {
         success: false,
@@ -47,15 +35,13 @@ export const startGetEntries = (isAuthenticated) => {
     }
   };
 };
-const fetchEntries = async (isAuthenticated) => {
+const fetchEntries = async (userId) => {
   const config = {
     withCredentials: true,
   };
-
-  const endpoint = isAuthenticated
-    ? `${APIURL}/questions`
-    : `${APIURL}/questions/public`;
-  return axios.get(endpoint, config);
+  console.log(userId);
+  const endpoint = `${APIURL}/questions`;
+  return axios.post(endpoint, { userId }, config);
 };
 
 export const voteEntry = (id, value) => {
@@ -76,8 +62,10 @@ export const voteEntry = (id, value) => {
       } else {
         dispatch(downvoteEntry(id));
       }
-    } catch (error) {
-      console.log("error");
+      return { success: true, statusCode: 200 };
+    } catch (e) {
+      const statusCode = e.response.status;
+      return { success: false, statusCode };
     }
   };
 };

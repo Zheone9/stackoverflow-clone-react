@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  setPreviousPage,
   startLoginUsernamePassword,
   startLoginWithGoogle,
 } from "../../actions/auth";
@@ -14,6 +15,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState(null);
+  const prevPage = useSelector((state) => state.auth?.previousPage);
   const onSubmit = async (values) => {
     const { username, password } = values;
     const { success, errorMsg } = await dispatch(
@@ -23,16 +25,25 @@ const LoginScreen = () => {
     if (!success) {
       setErrorMsg(errorMsg);
     } else {
+      if (prevPage) {
+        return navigate(prevPage);
+      }
       console.log("Logeo exitoso");
       return navigate("/");
     }
   };
 
+  useEffect(() => {
+    // Limpia el valor de 'prevPage' después de la redirección
+    return () => {
+      dispatch(setPreviousPage(null));
+    };
+  }, [navigate]);
+
   const onSuccess = async ({ clientId, credential }) => {
-    const success = await dispatch(startLoginWithGoogle(clientId, credential));
-    if (success) {
-      console.log("Logeo exitoso");
-      return navigate("/");
+    await dispatch(startLoginWithGoogle(clientId, credential));
+    if (prevPage) {
+      return navigate(prevPage);
     }
   };
   const fields = [
@@ -61,6 +72,7 @@ const LoginScreen = () => {
           />
         </Link>
       </div>
+
       <div className="mt-5">
         <div className="div-login-buttons mt-5 mb-5">
           <GoogleLoginButton onSuccess={onSuccess} onFailure={onFailure} />

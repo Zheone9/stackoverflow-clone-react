@@ -10,4 +10,6 @@ export const types = {
   setNewQuestion: "[Entry] SetNewQuestion",
   deleteEntry: "[Entry] Delete Entry",
   toggleSidebar: "[Sidebar] Toggle",
+  changeUsername: "[Account] ChangeUsername",
+  setPreviousPage: "[Auth] setPreviousPage",
 };

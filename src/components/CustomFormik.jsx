@@ -9,6 +9,7 @@ const CustomFormik = ({
   validationSchema,
   submitButton,
   fields,
+  handleFieldChange = () => {},
 }) => {
   const formik = useFormik({
     initialValues,
@@ -17,7 +18,7 @@ const CustomFormik = ({
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} onChange={handleFieldChange}>
       {fields.map((field) => (
         <div key={field.name} className="form-group">
           <TextField
@@ -29,6 +30,7 @@ const CustomFormik = ({
             color="primary"
             className="form-control"
             type={field.type}
+            onChange={handleFieldChange}
             size={field.size}
             {...formik.getFieldProps(field.name)}
           />

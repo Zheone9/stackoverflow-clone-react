@@ -9,15 +9,20 @@ export const logoutUser = () => {
   };
 };
 
-export const login = ({ uid, username }) => {
+export const login = ({ uid, username, picture }) => {
   return {
     type: types.userLoggedIn,
     payload: {
       username,
       uid,
+      picture,
     },
   };
 };
+export const setPreviousPage = (previousPage) => ({
+  type: types.setPreviousPage,
+  payload: previousPage,
+});
 
 export const startLoginUsernamePassword = (username, password) => {
   return async (dispatch) => {

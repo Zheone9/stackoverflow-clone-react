@@ -8,14 +8,27 @@ import {
 } from "../../../actions/entries";
 import EntriesList from "./EntriesList";
 import NewEntry from "./NewEntry";
+import useModal from "../../../hooks/useModal.js";
+import Modal from "react-modal";
+import {
+  getCustomStyles,
+  getCustomStylesRegisterUsername,
+} from "../modalStyles.js";
+import ModalRegisterUsername from "../../modals/ModalRegisterUsername.jsx";
+import {
+  selectUserId,
+  selectUsername,
+} from "../../../helpers/header/selectUsername.js";
 
 const UserEntries = () => {
   const { entries, isLoading, optionsClicked, newQuestion } = useSelector(
     (state) => state.userEntries
   );
   const isAuthenticaded = useSelector((state) => state.auth.isAuthenticated);
+  const username = useSelector(selectUsername);
   const dispatch = useDispatch();
-
+  const userId = useSelector(selectUserId);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const sortedEntries = [...entries].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -26,14 +39,19 @@ const UserEntries = () => {
   const handleSetOptionsClicked = (value) => {
     dispatch(setOptionsClicked(value));
   };
-
+  useEffect(() => {
+    console.log(username);
+    if (username === null && isAuthenticaded === true) {
+      openModal();
+    }
+  }, []);
   useEffect(() => {
     console.log(optionsClicked);
   }, [optionsClicked]);
 
   useEffect(() => {
     const loadEntries = async () => {
-      await dispatch(startGetEntries(isAuthenticaded));
+      await dispatch(startGetEntries(userId));
       dispatch(setLoading(false));
     };
     loadEntries();
@@ -41,12 +59,22 @@ const UserEntries = () => {
 
   return (
     <main>
+      <Modal
+        isOpen={isModalOpen}
+        style={getCustomStylesRegisterUsername()}
+        onRequestClose={closeModal}
+        contentLabel="Set username"
+        shouldCloseOnOverlayClick={false}
+      >
+        <ModalRegisterUsername closeModal={closeModal} />
+      </Modal>
       <div className="container-entries p-5">
         <NewEntry
           newQuestion={newQuestion}
           isAuthenticaded={isAuthenticaded}
           setnewQuestion={handleSetNewQuestion}
         />
+
         <EntriesList
           isLoading={isLoading}
           sortedEntries={sortedEntries}

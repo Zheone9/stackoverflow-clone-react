@@ -11,9 +11,12 @@ import StyledContainer from "../helpers/styledContainer";
 import ProfileRoutes from "./ProfileRoutes.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import Dashboard from "../components/user/Profile/Dashboard.jsx";
+import ChangeUsername from "../components/user/Profile/ChangeUsername.jsx";
+import { selectUsername } from "../helpers/header/selectUsername.js";
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const username = useSelector(selectUsername);
 
   return (
     <StyledContainer>
@@ -40,15 +43,17 @@ const MainContent = () => {
           />
           <Route index element={<Navigate to="/auth/login" />} />
         </Route>
-        <Route path="/profile" element={<ProfileRoutes />}>
-          <Route
-            path="dashboard"
-            element={
-              <PrivateRoute
-                isAuthenticated={isAuthenticated}
-                element={<Dashboard />}
-              />
-            }
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute
+              isAuthenticated={isAuthenticated && username}
+              element={<ProfileRoutes />}
+            />
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="change-username" element={<ChangeUsername />} />
           />
           <Route index element={<Navigate to="/profile/dashboard" />} />
           <Route path="*" element={<Navigate to="/profile/dashboard" />} />

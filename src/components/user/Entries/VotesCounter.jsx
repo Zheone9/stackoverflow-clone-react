@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  voteEntry,
-} from "../../../actions/entries";
+import { voteEntry } from "../../../actions/entries";
 import Modal from "react-modal";
 import useModal from "../../../hooks/useModal";
 import ModalDialogLogin from "../../modals/ModalDialogLogin";
 import { getCustomStyles } from "../modalStyles";
+import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
+import { useNavigate } from "react-router-dom";
 
 const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
+  const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('Efecto ejecutado, isAuthenticated:', isAuthenticated);
+    console.log("Efecto ejecutado, isAuthenticated:", isAuthenticated);
     if (!isAuthenticated) {
       if (btnUpvote.current.classList.contains("green")) {
         btnUpvote.current.classList.remove("green");
@@ -27,9 +28,7 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
         btnDownvote.current.classList.add("red");
       }
     }
-  }, [isAuthenticated,voted]);
-
-
+  }, [isAuthenticated, voted]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const [action, setAction] = useState("");
@@ -37,7 +36,7 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
   const btnUpvote = useRef();
   const btnDownvote = useRef();
 
-  const handleDownVote = (e) => {
+  const handleDownVote = async (e) => {
     if (!isAuthenticated) {
       setAction("downvote");
       openModal();
@@ -49,9 +48,14 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
     } else {
       e.currentTarget.classList.add("red");
     }
-    dispatch(voteEntry(id, -1));
+
+    const { success, statusCode } = await dispatch(voteEntry(id, -1));
+    if (!success && statusCode === 401) {
+      await handleLogoutWithPreviousPage(dispatch);
+      navigate("/auth/login");
+    }
   };
-  const handleUpVote = (e) => {
+  const handleUpVote = async (e) => {
     if (!isAuthenticated) {
       setAction("upvote");
       openModal();
@@ -63,7 +67,11 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
     } else {
       e.currentTarget.classList.add("green");
     }
-    dispatch(voteEntry(id, 1));
+    const { success, statusCode } = await dispatch(voteEntry(id, 1));
+    if (!success && statusCode === 401) {
+      await handleLogoutWithPreviousPage(dispatch);
+      navigate("/auth/login");
+    }
   };
 
   return (

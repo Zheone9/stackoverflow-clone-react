@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import {
+  Sidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+  useProSidebar,
+} from "react-pro-sidebar";
+import { useMatch, useNavigate } from "react-router-dom";
 
 const themes = {
   light: {
@@ -71,6 +78,8 @@ const hexToRgba = (hex, alpha) => {
 };
 
 const SidebarPro = () => {
+  const changeUsername = useMatch("/profile/change-username");
+  const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const handleThemeChange = (e) => {
     setTheme(e.target.checked ? "dark" : "light");
@@ -81,6 +90,7 @@ const SidebarPro = () => {
       fontSize: "13px",
       fontWeight: 400,
     },
+
     icon: {
       color: themes[theme].menu.icon,
       [`&.${menuClasses.disabled}`]: {
@@ -104,10 +114,6 @@ const SidebarPro = () => {
         color: themes[theme].menu.disabled.color,
       },
       "&:hover": {
-        backgroundColor: hexToRgba(
-          themes[theme].menu.hover.backgroundColor,
-          hasImage ? 0.8 : 1
-        ),
         color: themes[theme].menu.hover.color,
       },
     },
@@ -115,22 +121,30 @@ const SidebarPro = () => {
       fontWeight: open ? 600 : undefined,
     }),
   };
+  const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
+
   return (
     <Sidebar
+      collapsed={collapsed}
       customBreakPoint="768px"
       className="sidedar-profile"
       closeOnClick="true"
-      backgroundColor={hexToRgba(
-        themes[theme].sidebar.backgroundColor,
-        hasImage ? 0.9 : 1
-      )}
+      backgroundColor={"#F6F5F6FF"}
       rootStyles={{
         color: themes[theme].sidebar.color,
       }}
     >
-      <Menu>
-        <SubMenu label="Charts">
-          <MenuItem> Pie charts </MenuItem>
+      <Menu menuItemStyles={menuItemStyles}>
+        <SubMenu label="Account">
+          <MenuItem
+            className={changeUsername ? "active" : ""}
+            onClick={() => {
+              navigate("/profile/change-username");
+              toggleSidebar();
+            }}
+          >
+            Change username
+          </MenuItem>
           <MenuItem> Line charts </MenuItem>
         </SubMenu>
         <MenuItem> Documentation </MenuItem>
