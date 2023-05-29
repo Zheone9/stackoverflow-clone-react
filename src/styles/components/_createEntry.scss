@@ -71,21 +71,9 @@ button:hover:not(:disabled) {
 }
 
 .submit-button {
-  background-color: #5cb85c;
+  background-color: $dark-blue;
   transition: all 0.3s ease;
 }
-
-.submit-button:hover:not(:disabled) {
-  background-color: #449d44;
-}
-
-/* En FormStyles.css */
-.submit-button:disabled {
-  // transition: none;
-  background-color: lighten(#5cb85c, 20%);
-}
-
-/* ... (otras reglas CSS) ... */
 
 
 textarea {

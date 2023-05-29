@@ -74,6 +74,9 @@ body {
   font-weight: 100px !important;
 }
 
+.bg-blue {
+  background-color: #085078;
+}
 
 .container {
   display: flex;
@@ -88,6 +91,14 @@ body {
 
 .p-4 {
   padding: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.sidebar-profile, .ps-sidebar-root, .ps-toggled {
+  border: 0 !important;
 }
 
 .p-error-message {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomFormik from "../../CustomFormik.jsx";
 import { useDispatch } from "react-redux";
 import { startSetUsername } from "../../../actions/account.js";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { changeUsernameFormSchema as setUsernameSchema } from "../../../helpers/formValidation/formSchema.js";
 
 const SetUsername = ({ closeModal }) => {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -23,6 +23,7 @@ const SetUsername = ({ closeModal }) => {
   return (
     <div className="container-change-username">
       <CustomFormik
+        validationSchema={setUsernameSchema}
         initialValues={{ username: "" }}
         onSubmit={(values) => onSubmit(values)}
         fields={[
@@ -35,7 +36,7 @@ const SetUsername = ({ closeModal }) => {
         submitButton={
           <div className="div-btn-login">
             <button className="btn btn-primary" type="submit">
-              Cambiar nombre
+              Set username
             </button>
           </div>
         }

@@ -4,7 +4,7 @@ import { startHandleLogout, startLoginWithGoogle } from "../../actions/auth.js";
 import { useDispatch } from "react-redux";
 
 import LogoutIcon from "@mui/icons-material/Logout";
-import SetUsername from "../user/Entries/SetUsername.jsx";
+import SetUsername from "../user/Profile/SetUsername.jsx";
 
 const ModalRegisterUsername = ({ closeModal }) => {
   const dispatch = useDispatch();

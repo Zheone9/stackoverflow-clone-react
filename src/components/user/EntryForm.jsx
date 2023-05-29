@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { TextField } from "@mui/material";
-import HCaptcha from "react-hcaptcha";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 const EntryForm = ({
   initialValues,
@@ -16,6 +16,7 @@ const EntryForm = ({
     onSubmit,
     validationSchema,
   });
+  const hCaptchaRef = useRef(null);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -55,6 +56,7 @@ const EntryForm = ({
       ))}
       <div className="text-center">
         <HCaptcha
+          ref={hCaptchaRef}
           sitekey={siteKeyHcaptcha}
           onVerify={(token) => formik.setFieldValue("hCaptcha", token)}
           onExpire={() => {

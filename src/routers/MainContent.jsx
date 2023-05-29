@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserEntries from "../components/user/Entries/UserEntries";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import AuthRoutes from "./AuthRoutes";
 import PublicRoute from "./PublicRoute";
 import LoginScreen from "../components/auth/LoginScreen";

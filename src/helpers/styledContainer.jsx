@@ -18,7 +18,7 @@ const StyledContainer = ({ children }) => {
     };
   }, [location.pathname]);
   return (
-    <div className={`container${isProfileRoute ? " no-padding" : ""}`}>
+    <div className={`container${isProfileRoute ? " no-padding bg-blue" : ""}`}>
       {children}
     </div>
   );

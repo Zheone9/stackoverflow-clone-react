@@ -5,11 +5,7 @@ import { startChangeUsername } from "../../../actions/account.js";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
 import { selectUsername } from "../../../helpers/header/selectUsername.js";
-import {
-  changeUsernameFormSchema,
-  newEntryValidationSchema,
-  registerFormSchema,
-} from "../../../helpers/formValidation/formSchema.js";
+import { changeUsernameFormSchema } from "../../../helpers/formValidation/formSchema.js";
 
 const changeUsername = () => {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -45,7 +41,7 @@ const changeUsername = () => {
     resetMessages();
   };
   return (
-    <div className="container-change-username">
+    <div className="text-center">
       <CustomFormik
         validationSchema={changeUsernameFormSchema}
         initialValues={{ username }}
@@ -61,7 +57,7 @@ const changeUsername = () => {
         submitButton={
           <div className="div-btn-login">
             <button className="btn btn-primary" type="submit">
-              Cambiar nombre
+              Change username
             </button>
           </div>
         }

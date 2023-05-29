@@ -95,18 +95,7 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
         </MenuItem>
 
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+
         <MenuItem onClick={() => handleLogout()}>
           <ListItemIcon>
             <Logout fontSize="small" />

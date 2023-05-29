@@ -33,6 +33,12 @@ const CustomFormik = ({
             onChange={handleFieldChange}
             size={field.size}
             {...formik.getFieldProps(field.name)}
+            sx={{
+              "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                {
+                  borderColor: "#085078", // Cambia esto al color deseado
+                },
+            }}
           />
           {formik.touched[field.name] && formik.errors[field.name] && (
             <p className="p-error-message-input">{formik.errors[field.name]}</p>

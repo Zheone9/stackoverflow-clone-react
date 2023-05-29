@@ -1,12 +1,14 @@
 .container-profile-section {
   display: flex;
   //max-width: 1400px;
-  width: 1400px;
+  width: 100%;
+  position: relative;
+  padding: 20px;
+  background-color: white;
+  border-top-left-radius: 20px;
+  height: 100vh;
 }
 
-.container-change-username {
-  padding: 20px;
-}
 
 .sidedar-profile {
   height: 100vh;
@@ -21,20 +23,6 @@
 
 }
 
-.active {
-  background-color: $middle-blue;
-  color: white;
-
-  &:hover {
-    background-color: $middle-blue !important;
-    color: white !important;
-  }
-}
-
-.active:hover {
-  background-color: $middle-blue !important;
-  color: white !important;
-}
 
 @media screen and (max-width: 768px) {
   .container-change-username {

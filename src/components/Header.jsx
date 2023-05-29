@@ -32,7 +32,7 @@ const Header = () => {
     <header>
       <div className="container-header">
         <img
-          src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1682289016/stackoverflow_project_assets/Stack_Overflow_logo_szqi3b.svg"
+          src="https://res.cloudinary.com/dzxhdnqm4/image/upload/v1685317774/Stack_Overflow_logo_31_3_trhtjf.svg"
           onClick={() => navigate("/")}
           className="img-stackoverflow"
           alt=""

@@ -6,20 +6,22 @@ import {
   SubMenu,
   useProSidebar,
 } from "react-pro-sidebar";
-import { useMatch, useNavigate } from "react-router-dom";
+import { NavLink, useMatch, useNavigate } from "react-router-dom";
 
 const themes = {
   light: {
     sidebar: {
-      backgroundColor: "#ffffff",
-      color: "#607489",
+      backgroundColor: "#6E939B",
+      color: "#B9D8E9",
     },
     menu: {
       menuContent: "#fbfcfd",
       icon: "#0098e5",
+      SubMenu: {
+        openBackgroundColor: "#e0e0e0",
+      },
       hover: {
-        backgroundColor: "#c5e4ff",
-        color: "#44596e",
+        backgroundColor: "red",
       },
       disabled: {
         color: "#9fb6cf",
@@ -87,8 +89,9 @@ const SidebarPro = () => {
   const [hasImage, setHasImage] = useState(false);
   const menuItemStyles = {
     root: {
-      fontSize: "13px",
+      fontSize: "0.78rem",
       fontWeight: 400,
+      transition: "all 0.3 ease in",
     },
 
     icon: {
@@ -100,6 +103,7 @@ const SidebarPro = () => {
     SubMenuExpandIcon: {
       color: "#b6b7b9",
     },
+
     subMenuContent: ({ level }) => ({
       backgroundColor:
         level === 0
@@ -108,14 +112,17 @@ const SidebarPro = () => {
               hasImage && !collapsed ? 0.4 : 1
             )
           : "transparent",
+      transition: "all 0.3 ease in",
     }),
     button: {
       [`&.${menuClasses.disabled}`]: {
         color: themes[theme].menu.disabled.color,
       },
+
       "&:hover": {
         color: themes[theme].menu.hover.color,
       },
+      transition: "all 0.3s ease",
     },
     label: ({ open }) => ({
       fontWeight: open ? 600 : undefined,
@@ -129,26 +136,57 @@ const SidebarPro = () => {
       customBreakPoint="768px"
       className="sidedar-profile"
       closeOnClick="true"
-      backgroundColor={"#F6F5F6FF"}
+      backgroundColor={"#085078"}
       rootStyles={{
         color: themes[theme].sidebar.color,
+        [`.${menuClasses.subMenuContent}`]: {
+          backgroundColor: "#085078",
+          paddingTop: "5px",
+          paddingBottom: "5px",
+        },
+        [`.${menuClasses.button}`]: {
+          borderRadius: "18px",
+          "&:hover": {
+            borderRadius: "18px",
+            backgroundColor: "#0A6895  !important",
+          },
+          [`&.active`]: {
+            backgroundColor: "#0A6895  !important",
+          },
+        },
+        [`.${sidebarClasses.root}`]: {
+          borderRightWidth: "0",
+        },
+        [`.${sidebarClasses.container}`]: {
+          padding: "10px",
+        },
+
+        [`.${menuClasses.menuItemRoot}`]: {
+          paddingTop: "5px",
+          paddingBottom: "5px",
+        },
       }}
     >
       <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          component={<NavLink exact to="/profile/dashboard" />}
+          onClick={() => {
+            toggleSidebar();
+          }}
+        >
+          Dashboard
+        </MenuItem>
         <SubMenu label="Account">
           <MenuItem
-            className={changeUsername ? "active" : ""}
+            component={<NavLink exact to="/profile/change-username" />}
             onClick={() => {
-              navigate("/profile/change-username");
               toggleSidebar();
             }}
           >
             Change username
           </MenuItem>
-          <MenuItem> Line charts </MenuItem>
+          {/*<MenuItem> Line charts </MenuItem>*/}
         </SubMenu>
-        <MenuItem> Documentation </MenuItem>
-        <MenuItem> Calendar </MenuItem>
       </Menu>
     </Sidebar>
   );
