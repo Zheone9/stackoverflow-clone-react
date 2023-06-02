@@ -176,17 +176,15 @@ const SidebarPro = () => {
         >
           Dashboard
         </MenuItem>
-        <SubMenu label="Account">
-          <MenuItem
-            component={<NavLink exact to="/profile/change-username" />}
-            onClick={() => {
-              toggleSidebar();
-            }}
-          >
-            Change username
-          </MenuItem>
-          {/*<MenuItem> Line charts </MenuItem>*/}
-        </SubMenu>
+
+        <MenuItem
+          component={<NavLink exact to="/profile/account" />}
+          onClick={() => {
+            toggleSidebar();
+          }}
+        >
+          Account settings
+        </MenuItem>
       </Menu>
     </Sidebar>
   );

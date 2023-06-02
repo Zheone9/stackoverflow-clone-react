@@ -14,7 +14,7 @@ import {
   getCustomStyles,
   getCustomStylesRegisterUsername,
 } from "../modalStyles.js";
-import ModalRegisterUsername from "../../modals/ModalRegisterUsername.jsx";
+import ModalSetUsername from "../../modals/ModalSetUsername.jsx";
 import {
   selectUserId,
   selectUsername,
@@ -66,7 +66,7 @@ const UserEntries = () => {
         contentLabel="Set username"
         shouldCloseOnOverlayClick={false}
       >
-        <ModalRegisterUsername closeModal={closeModal} />
+        <ModalSetUsername closeModal={closeModal} />
       </Modal>
       <div className="container-entries p-5">
         <NewEntry

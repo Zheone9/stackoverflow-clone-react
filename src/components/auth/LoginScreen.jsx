@@ -95,9 +95,9 @@ const LoginScreen = () => {
         </div>
       </div>
       <div className="mt-5 mb-5 text-center">
-        Don’t have an account?{" "}
+        <p className="p-info-auth">Don’t have an account? </p>
         <Link to="/auth/register" className="link">
-          Sign up
+          <p className="p-info-auth"> Sign up</p>
         </Link>
       </div>
     </div>

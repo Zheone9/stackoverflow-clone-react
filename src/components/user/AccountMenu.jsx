@@ -61,7 +61,7 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
           elevation: 0,
           sx: {
             overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            filter: "drop-shadow(0px 2px 2px rgba(0,0,  0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {
               width: 32,
@@ -81,6 +81,9 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
+            "& li": {
+              fontSize: "0.8rem", // Tamaño de letra personalizado para los elementos del menú
+            },
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -93,9 +96,7 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
         >
           <Avatar src={picture} /> My account
         </MenuItem>
-
         <Divider />
-
         <MenuItem onClick={() => handleLogout()}>
           <ListItemIcon>
             <Logout fontSize="small" />

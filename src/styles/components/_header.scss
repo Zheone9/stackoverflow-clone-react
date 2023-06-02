@@ -9,6 +9,7 @@ header {
 
 .div-buttons .btn {
   width: 5rem;
+  height: 2.2rem;
 }
 
 .img-stackoverflow {
@@ -69,7 +70,7 @@ header {
 
 @media screen and (max-width: 768px) {
   .div-buttons .btn {
-    height: 2.7rem;
+    height: 2rem;
     font-size: 0.8rem;
     min-width: 0;
   }

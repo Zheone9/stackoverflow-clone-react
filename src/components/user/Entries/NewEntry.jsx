@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AskQuestionButton from "./AskQuestionButton";
 import CreateNewEntry from "./CreateNewEntry";
 
 const NewEntry = ({ newQuestion, isAuthenticaded, setnewQuestion }) => {
-  if (newQuestion) {
+  if (newQuestion && isAuthenticaded) {
     return <CreateNewEntry />;
   }
   if (isAuthenticaded) {

@@ -55,11 +55,11 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   return (
     <div className="mb-5">
       <div className="div-questionTitle">
-        <h1>{entry.title}</h1>
+        <h2>{entry.title}</h2>
         {renderBasicMenu()}
       </div>
       <div className="question-info">
-        <p>{date}</p>
+        <p className="p-small">{date}</p>
       </div>
       <div className="div-questionBody">
         <VotesCounter
@@ -67,7 +67,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
           id={entry.uid}
           voted={entry.voted}
         />
-        <p>{entry.body}</p>
+        <p className="p-medium">{entry.body}</p>
       </div>
       <div className="div-userInfo">
         <UserInfo author={entry.author} date={entry.date} picture={picture} />

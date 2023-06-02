@@ -6,8 +6,8 @@ export const getCustomStylesRegisterUsername = () => {
     },
 
     content: {
-      background: "#FFFFFF",
       borderRadius: "4px",
+      border: "1px",
       display: "flex",
       justifyContent: "center",
       maxHeight: "400px",

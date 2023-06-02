@@ -5,6 +5,11 @@
   background-color: white;
   border-radius: 10px;
   z-index: 10;
+  text-align: center;
+
+  .btn {
+    width: 8rem !important;
+  }
 }
 
 form button {
@@ -22,6 +27,7 @@ form button {
   margin-right: 0.25rem;
 }
 
+
 .div-btn-login {
   text-align: center;
 
@@ -30,8 +36,9 @@ form button {
   }
 }
 
+
 .form-group {
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .div-login-buttons {

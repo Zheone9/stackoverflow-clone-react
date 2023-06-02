@@ -2,12 +2,26 @@ import React, { useState } from "react";
 import CustomFormik from "../../CustomFormik.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { startChangeUsername } from "../../../actions/account.js";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
 import { selectUsername } from "../../../helpers/header/selectUsername.js";
 import { changeUsernameFormSchema } from "../../../helpers/formValidation/formSchema.js";
+import Snackbar from "@mui/material/Snackbar";
+import { Slide } from "@mui/material";
+import SnackbarContent from "@mui/material/SnackbarContent";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import Box from "@mui/material/Box";
+
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 const changeUsername = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
   const username = useSelector(selectUsername);
@@ -16,7 +30,7 @@ const changeUsername = () => {
   const onSubmit = async (values) => {
     resetMessages();
     if (username === values.username) {
-      setErrorMsg("Username must be different");
+      setErrorMsg("Please set a new username");
       return;
     }
     const { success, errorMsg, statusCode } = await dispatch(
@@ -28,6 +42,7 @@ const changeUsername = () => {
       console.log(errorMsg);
       setErrorMsg(errorMsg);
     } else {
+      setOpen(true);
       setSuccessMsg("Usuario cambiado exitosamente");
       console.log("Usuario cambiado exitosamente");
     }
@@ -40,34 +55,56 @@ const changeUsername = () => {
   const handleFieldChange = () => {
     resetMessages();
   };
+
   return (
-    <div className="text-center">
-      <CustomFormik
-        validationSchema={changeUsernameFormSchema}
-        initialValues={{ username }}
-        handleFieldChange={handleFieldChange}
-        onSubmit={(values) => onSubmit(values)}
-        fields={[
-          {
-            label: "Username",
-            name: "username",
-            type: "text",
-          },
-        ]}
-        submitButton={
-          <div className="div-btn-login">
-            <button className="btn btn-primary" type="submit">
-              Change username
-            </button>
-          </div>
-        }
-      />
-      {errorMsg && <p className="p-error-message">{errorMsg}</p>}
-      {successMsg && (
-        <div className="animate__animated animate__heartBeat mt-1">
-          <CheckCircleOutlineIcon style={{ color: "green" }} />
-        </div>
-      )}
+    <div>
+      <div className="text-start d-flex div-changeUsername">
+        <p className="p-small p-label">Account username</p>
+        <CustomFormik
+          validationSchema={changeUsernameFormSchema}
+          initialValues={{ username }}
+          handleFieldChange={handleFieldChange}
+          onSubmit={(values) => onSubmit(values)}
+          fields={[
+            {
+              label: "Username",
+              name: "username",
+              type: "text",
+            },
+          ]}
+          // submitButton={
+          //   <div className="div-btn-login">
+          //     <button className="btn btn-primary" type="submit">
+          //       Change username
+          //     </button>
+          //   </div>
+          // }
+        />
+      </div>
+
+      {errorMsg && <p className="p-error-message p-small">{errorMsg}</p>}
+      <Snackbar
+        open={open}
+        onClose={handleClose}
+        message="Username changed"
+        direction="left"
+        autoHideDuration={1600}
+        TransitionComponent={TransitionUp}
+      >
+        <SnackbarContent
+          message={
+            <Box display="flex" alignItems="center">
+              <CheckBoxIcon />
+              Username changed
+            </Box>
+          }
+          sx={{
+            backgroundColor: "#3D8EB9",
+            color: "white",
+            fontSize: "0.77rem",
+          }}
+        />
+      </Snackbar>
     </div>
   );
 };

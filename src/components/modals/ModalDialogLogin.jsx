@@ -30,9 +30,9 @@ const ModalDialogLogin = ({ closeModal, action }) => {
   };
   return (
     <div className="dialog">
-      <h1 className="mb-5">Join the Stack Overflow community </h1>
-      <p className="mb-2">You need 5 reputation to {action} posts.</p>
-      <p>
+      <h2 className="mb-5">Join the Stack Overflow community </h2>
+      <p className="mb-2 p-small">You need 5 reputation to {action} posts.</p>
+      <p className="p-small">
         Join Stack Overflow to start earning reputation and unlocking new
         privileges like voting and commenting.
       </p>
@@ -48,7 +48,7 @@ const ModalDialogLogin = ({ closeModal, action }) => {
             theme="outline"
           />
           <Link to="/auth/login">
-            <button className="pointer mt-1">
+            <button className="btn pointer mt-1">
               <i className="fa-solid fa-envelope"></i>
               Log in with Email
             </button>

@@ -19,7 +19,7 @@ const EntryForm = ({
   const hCaptchaRef = useRef(null);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} style={{ minWidth: "305px" }}>
       {fields.map((field) => (
         <div key={field.name} className="form-group">
           {field.type === "textarea" ? (
@@ -30,7 +30,24 @@ const EntryForm = ({
               color="primary"
               multiline
               rows={1}
+              size="small"
               fullWidth
+              sx={{
+                "& .MuiInputBase-root": {
+                  transition: "background-color 0.3s ease-in-out", // Transición para el color de fondo
+                },
+                "&:hover .MuiInputBase-root": {
+                  backgroundColor: "#e8f0fe", // Color de fondo al hacer hover
+                },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "#085078", // Cambia esto al color deseado
+                  },
+              }}
+              InputProps={{ sx: { fontSize: "0.9rem" } }}
+              InputLabelProps={{
+                sx: { fontSize: "0.8rem" },
+              }}
               variant="outlined"
               className="form-control"
               {...formik.getFieldProps(field.name)}
@@ -41,7 +58,24 @@ const EntryForm = ({
               label={field.label}
               variant="outlined"
               name={field.name}
+              size="small"
               fullWidth
+              InputProps={{ sx: { fontSize: "0.9rem" } }}
+              InputLabelProps={{
+                sx: { fontSize: "0.8rem" },
+              }}
+              sx={{
+                "& .MuiInputBase-root": {
+                  transition: "background-color 0.3s ease-in-out", // Transición para el color de fondo
+                },
+                "&:hover .MuiInputBase-root": {
+                  backgroundColor: "#e8f0fe", // Color de fondo al hacer hover
+                },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "#085078", // Cambia esto al color deseado
+                  },
+              }}
               color="primary"
               className="form-control"
               type={field.type}

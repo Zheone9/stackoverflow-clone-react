@@ -28,10 +28,11 @@ const CustomFormik = ({
             name={field.name}
             fullWidth
             color="primary"
+            style={{ maxWidth: "400px" }}
             className="form-control"
             type={field.type}
             onChange={handleFieldChange}
-            size={field.size}
+            size="small"
             {...formik.getFieldProps(field.name)}
             sx={{
               "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
@@ -39,9 +40,15 @@ const CustomFormik = ({
                   borderColor: "#085078", // Cambia esto al color deseado
                 },
             }}
+            InputProps={{ sx: { fontSize: "0.9rem" } }}
+            InputLabelProps={{
+              sx: { fontSize: "0.8rem" },
+            }}
           />
           {formik.touched[field.name] && formik.errors[field.name] && (
-            <p className="p-error-message-input">{formik.errors[field.name]}</p>
+            <p className="p-error-message-input p-small">
+              {formik.errors[field.name]}
+            </p>
           )}
         </div>
       ))}

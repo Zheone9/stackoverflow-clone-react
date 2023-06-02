@@ -97,16 +97,16 @@ body {
   text-align: center;
 }
 
-.sidebar-profile, .ps-sidebar-root, .ps-toggled {
-  border: 0 !important;
-}
 
 .p-error-message {
   color: red;
-  font-size: 0.8em;
-  margin-top: 0.7em;
+  margin-top: 0.7rem;
   margin-bottom: 0;
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
 }
 
 .text-center {
@@ -116,6 +116,23 @@ body {
 h1 {
   font-weight: 100;
   font-size: 2rem;
+}
+
+.p-medium {
+  font-size: 0.8339rem;
+}
+
+.p-small {
+  font-size: 0.71rem;
+}
+
+h2 {
+  font-weight: 100;
+  color: darken($dark-grey, 23);
+}
+
+.p-large {
+  font-size: 1.5rem;
 }
 
 @media screen and (min-width: 768px) {

@@ -3,7 +3,15 @@ main {
 }
 
 .question-info {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  margin-bottom: 1.875rem;
+
+
+  margin-top: 0.4rem;
+
+
+  color: #8e8273;
+
 }
 
 .div-center {
@@ -15,7 +23,7 @@ main {
 }
 
 .h3-set-username {
-  color: darken($dark-blue, 13);
+  color: black;
 }
 
 .div-logout-main {
@@ -32,12 +40,12 @@ main {
   display: flex;
   align-items: center;
   margin-bottom: 1.25rem;
+
+
 }
 
 .div-questionTitle {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 0.625rem;
+  //font-weight: 700;
   display: flex;
   justify-content: space-between;
 }
@@ -46,11 +54,6 @@ main {
   display: flex;
   justify-content: end;
   width: 100%;
-}
-
-.question-info {
-  margin-top: -0.625rem;
-  margin-bottom: 1.875rem;
 }
 
 .container-entries {

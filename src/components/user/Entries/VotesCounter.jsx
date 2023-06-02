@@ -97,7 +97,7 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
           className="div-votesCounterNumber"
           style={{ color: votesNumber >= 0 ? "#7D7D7D" : "#E25656" }}
         >
-          {votesNumber}
+          <p className="p-large">{votesNumber}</p>
         </div>
         <div className="div-votesCounterDown">
           <i

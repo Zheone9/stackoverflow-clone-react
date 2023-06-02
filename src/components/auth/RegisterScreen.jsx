@@ -83,9 +83,9 @@ const RegisterScreen = () => {
           {errorMsg && <p className="p-error-message">{errorMsg}</p>}
         </div>
         <div className="mt-5 mb-5 text-center">
-          Already have an account?{" "}
+          <p className="p-info-auth"> Already have an account?</p>
           <Link className="link" to="/auth/login">
-            Login
+            <p className="p-info-auth"> Login</p>
           </Link>
         </div>
       </div>

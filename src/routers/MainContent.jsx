@@ -12,6 +12,8 @@ import PrivateRoute from "./PrivateRoute.jsx";
 import Dashboard from "../components/user/Profile/Dashboard.jsx";
 import ChangeUsername from "../components/user/Profile/ChangeUsername.jsx";
 import { selectUsername } from "../helpers/header/selectUsername.js";
+import ChangeAvatar from "../components/user/Profile/ChangeAvatar.jsx";
+import AccountPage from "../components/user/Profile/AccountPage.jsx";
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -52,7 +54,7 @@ const MainContent = () => {
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="change-username" element={<ChangeUsername />} />
+          <Route path="account" element={<AccountPage />} />
           />
           <Route index element={<Navigate to="/profile/dashboard" />} />
           <Route path="*" element={<Navigate to="/profile/dashboard" />} />

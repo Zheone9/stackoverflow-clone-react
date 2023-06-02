@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SetUsername from "../user/Profile/SetUsername.jsx";
 
-const ModalRegisterUsername = ({ closeModal }) => {
+const ModalSetUsername = ({ closeModal }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -32,4 +32,4 @@ const ModalRegisterUsername = ({ closeModal }) => {
   );
 };
 
-export default ModalRegisterUsername;
+export default ModalSetUsername;

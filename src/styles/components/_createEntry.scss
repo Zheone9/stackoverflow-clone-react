@@ -18,6 +18,13 @@
   margin-bottom: 1.5rem;
 }
 
+.div-question-title {
+  h1 {
+    margin: 0 !important;
+    padding: 0;
+  }
+}
+
 .div-question-title,
 .div-question-body {
   width: 100%;
@@ -65,10 +72,6 @@ textarea {
 //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 // }
 
-button:hover:not(:disabled) {
-  /* ... (otras propiedades) ... */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
 
 .submit-button {
   background-color: $dark-blue;
