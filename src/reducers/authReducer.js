@@ -29,6 +29,14 @@ const authReducer = (state = initialState, action) => {
           username: action.payload.username,
         },
       };
+    case types.uploadProfilePicture:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          picture: action.payload.picture,
+        },
+      };
 
     case types.setPreviousPage:
       return { ...state, previousPage: action.payload };

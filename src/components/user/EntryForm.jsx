@@ -39,10 +39,9 @@ const EntryForm = ({
                 "&:hover .MuiInputBase-root": {
                   backgroundColor: "#e8f0fe", // Color de fondo al hacer hover
                 },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor: "#085078", // Cambia esto al color deseado
-                  },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#085078", // Cambia esto al color deseado
+                },
               }}
               InputProps={{ sx: { fontSize: "0.9rem" } }}
               InputLabelProps={{
@@ -71,10 +70,9 @@ const EntryForm = ({
                 "&:hover .MuiInputBase-root": {
                   backgroundColor: "#e8f0fe", // Color de fondo al hacer hover
                 },
-                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor: "#085078", // Cambia esto al color deseado
-                  },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#085078", // Cambia esto al color deseado
+                },
               }}
               color="primary"
               className="form-control"
@@ -84,7 +82,9 @@ const EntryForm = ({
           )}
 
           {formik.touched[field.name] && formik.errors[field.name] && (
-            <p className="p-error-message-input">{formik.errors[field.name]}</p>
+            <p className="p-error-message-input p-small">
+              {formik.errors[field.name]}
+            </p>
           )}
         </div>
       ))}

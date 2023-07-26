@@ -59,6 +59,7 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
           withCredentials: true,
         }
       );
+      console.log(response.data.payload);
       dispatch(login(response.data.payload));
       return true;
     } catch (error) {

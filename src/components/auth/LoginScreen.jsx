@@ -16,6 +16,7 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState(null);
   const prevPage = useSelector((state) => state.auth?.previousPage);
+
   const onSubmit = async (values) => {
     const { username, password } = values;
     const { success, errorMsg } = await dispatch(
@@ -32,6 +33,12 @@ const LoginScreen = () => {
       return navigate("/");
     }
   };
+  useEffect(() => {
+    // Limpia el valor de 'errorMsg' después de la redirección
+    return () => {
+      setErrorMsg(null);
+    };
+  }, [navigate]);
 
   useEffect(() => {
     // Limpia el valor de 'prevPage' después de la redirección

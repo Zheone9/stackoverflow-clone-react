@@ -11,6 +11,43 @@ export const changeUsername = (username) => {
     },
   };
 };
+export const uploadProfilePicture = (base64Picture) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+
+      // Probablemente quieras hacer esto en una función separada
+      const base64Response = await fetch(base64Picture);
+      const blob = await base64Response.blob();
+
+      formData.append("image", blob, "file.png"); // elige el nombre de archivo y la extensión que necesites
+
+      const response = await axios.post(
+        `${APIURL}/account/upload-profile-picture`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response);
+
+      dispatch({
+        type: types.uploadProfilePicture,
+        payload: {
+          picture: response.data.payload.picture,
+        },
+      });
+
+      return { success: true, errorMsg: null };
+    } catch (e) {
+      return { success: false, errorMsg: e.response.data.message };
+    }
+  };
+};
 
 export const startChangeUsername = (newUsername) => {
   return async (dispatch) => {

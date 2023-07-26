@@ -33,13 +33,12 @@ export const registerFormSchema = Yup.object({
     .required("Confirm Password is required"),
 });
 
-export const accountSettingsSchema = (notAllowedUsername = []) =>
+export const accountSettingsSchema = () =>
   Yup.object({
     username: Yup.string()
       .min(6, "Username must be at least 6 characters ")
       .max(10, "Username must be 10 or fewer characters long")
-      .required("Username is required")
-      .notOneOf(notAllowedUsername, "Please choose a different username"),
+      .required("Username is required"),
   });
 export const changeUsernameFormSchema = () => {
   return Yup.object({

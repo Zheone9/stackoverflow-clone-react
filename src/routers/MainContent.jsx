@@ -55,7 +55,6 @@ const MainContent = () => {
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="account" element={<AccountPage />} />
-          />
           <Route index element={<Navigate to="/profile/dashboard" />} />
           <Route path="*" element={<Navigate to="/profile/dashboard" />} />
         </Route>

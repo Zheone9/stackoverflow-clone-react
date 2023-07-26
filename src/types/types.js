@@ -12,4 +12,5 @@ export const types = {
   toggleSidebar: "[Sidebar] Toggle",
   changeUsername: "[Account] ChangeUsername",
   setPreviousPage: "[Auth] setPreviousPage",
+  uploadProfilePicture: "[Account] UploadProfilePicture",
 };
