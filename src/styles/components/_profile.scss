@@ -1,6 +1,9 @@
 .container-profile-section {
   position: relative;
-  padding: 60px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  padding-left: 20px;
+  padding-right: 20px;
   width: 100%;
   background-color: white;
   border-top-left-radius: 20px;
@@ -11,33 +14,30 @@
     text-align: start;
   }
 
-  .p-error-message, .p-error-message-input {
+  .p-error-message,
+  .p-error-message-input {
     text-align: start;
   }
 
-
-  .sidebar-profile, .ps-sidebar-root, .ps-toggled {
+  .sidebar-profile,
+  .ps-sidebar-root,
+  .ps-toggled {
     border: 0 !important;
   }
 
   form {
     max-width: 600px;
   }
-
-
 }
-
 
 .sidedar-profile {
   height: 100vh;
-
 }
 
 .ps-menu-button {
   &:hover {
     background-color: #c5e4ff !important;
   }
-
 }
 
 .div-changeUsername {
@@ -51,7 +51,6 @@
 .justify-content-up {
   justify-content: flex-start !important;
   align-items: start !important;
-
 }
 
 @media screen and (max-width: 768px) {

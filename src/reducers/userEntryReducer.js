@@ -51,6 +51,19 @@ export const userEntryReducer = (state = initialState, action) => {
       return { ...state, optionsClicked: action.payload };
     case types.setNewQuestion:
       return { ...state, newQuestion: action.payload };
+    case types.addComment:
+      return {
+        ...state,
+        entries: state.entries.map((entry) =>
+          entry.uid === action.payload.id
+            ? {
+                ...entry,
+                comments: [...entry.comments, { ...action.payload.comment }],
+              }
+            : entry
+        ),
+      };
+
     default:
       return state;
   }
