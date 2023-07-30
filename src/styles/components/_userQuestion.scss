@@ -6,12 +6,9 @@ main {
   font-size: 0.8rem;
   margin-bottom: 1.875rem;
 
-
   margin-top: 0.4rem;
 
-
   color: #8e8273;
-
 }
 
 .div-center {
@@ -40,8 +37,6 @@ main {
   display: flex;
   align-items: center;
   margin-bottom: 1.25rem;
-
-
 }
 
 .div-questionTitle {
@@ -100,4 +95,27 @@ main {
 
 .custom-menu-item:hover {
   background-color: #e0e0e0;
+}
+.entry-comments {
+  padding: 2em;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  p {
+    font-size: 0.65rem;
+  }
+
+  .div-comment {
+    padding: 0.3em;
+  }
+  .comment-author {
+    color: #3d8eb9;
+  }
+}
+
+.post-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import UserInfo from "./UserInfo";
 import VotesCounter from "./VotesCounter";
 import calculateDifference from "../../../helpers/entries/calculateDateDifference";
@@ -6,8 +6,12 @@ import OptionsMenuEntry from "./OptionsMenuEntry.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlagIcon from "@mui/icons-material/Flag";
-import { startDeleteQuestion } from "../../../actions/entries.js";
+import {
+  startAddComment,
+  startDeleteQuestion,
+} from "../../../actions/entries.js";
 import { selectPicture } from "../../../helpers/header/selectUsername.js";
+import EntryComment from "./EntryComment";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
@@ -16,6 +20,11 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const picture = useSelector(selectPicture);
   const handleDeleteQuestion = async () => {
     await dispatch(startDeleteQuestion(entry.uid));
+  };
+
+  const submitComment = async (entryId, comment) => {
+    await dispatch(startAddComment(entryId, comment));
+    
   };
 
   const menuItems = [
@@ -72,6 +81,32 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
       <div className="div-userInfo">
         <UserInfo author={entry.author} date={entry.date} picture={picture} />
       </div>
+      <div className="entry-comments">
+        <ul>
+          <li>
+            <hr />
+            <div>
+              <p>
+                {entry.comments.length > 0 ? (
+                  entry.comments.map((comment) => (
+                    <div key={comment.uid} className="div-comment">
+                      <p className="comment-body">{comment.body}</p>
+                      <p className="comment-author">
+                        - {comment.user.username}
+                      </p>
+                      <p>Created at: {comment.createdAt}</p>
+                      <hr />
+                    </div>
+                  ))
+                ) : (
+                  <p className="comment-body">No comments yet</p>
+                )}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <EntryComment submitComment={submitComment} entryId={entry.uid} />
     </div>
   );
 };

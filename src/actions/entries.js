@@ -145,3 +145,43 @@ export const setNewQuestion = (newQuestion) => ({
   type: types.setNewQuestion,
   payload: newQuestion,
 });
+
+export const startAddComment = (entryId, comment) => {
+  return async (dispatch) => {
+    try {
+      const response = await addCommentToEntry(entryId, comment);
+      if (response.data.ok) {
+        dispatch(addComment(entryId, response.data.comment));
+      }
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  };
+};
+
+const addCommentToEntry = async (entryId, body) => {
+  const endpoint = `${APIURL}/questions/addComment`;
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    return await axios.post(
+      endpoint,
+      {
+        entryId,
+        body,
+      },
+      config
+    );
+  } catch (error) {
+    console.error("Error in axios.post:", error);
+  }
+};
+
+export const addComment = (id, comment) => ({
+  type: types.addComment,
+  payload: {
+    id,
+    comment,
+  },
+});

@@ -13,4 +13,5 @@ export const types = {
   changeUsername: "[Account] ChangeUsername",
   setPreviousPage: "[Auth] setPreviousPage",
   uploadProfilePicture: "[Account] UploadProfilePicture",
+  addComment: "[Entry] AddComment",
 };
