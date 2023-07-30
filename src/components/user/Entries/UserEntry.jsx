@@ -3,6 +3,7 @@ import UserInfo from "./UserInfo";
 import VotesCounter from "./VotesCounter";
 import calculateDifference from "../../../helpers/entries/calculateDateDifference";
 import OptionsMenuEntry from "./OptionsMenuEntry.jsx";
+import useModal from "../../../hooks/useModal";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlagIcon from "@mui/icons-material/Flag";
@@ -15,10 +16,18 @@ import EntryComment from "./EntryComment";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [newComment, setNewComment] = useState(false);
   const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
   const dispatch = useDispatch();
   const picture = useSelector(selectPicture);
+  const handleNewComment = () => {
+    if (!isAuthenticaded) {
+      openModal();
+      return;
+    }
+    setNewComment(true);
+  };
   const handleDeleteQuestion = async () => {
     await dispatch(startDeleteQuestion(entry.uid));
   };
@@ -75,6 +84,9 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
           votesNumber={entry.votes}
           id={entry.uid}
           voted={entry.voted}
+          isModalOpen={isModalOpen}
+          openModal={openModal}
+          closeModal={closeModal}
         />
         <p className="p-medium">{entry.body}</p>
       </div>
@@ -102,8 +114,11 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
                   <p className="comment-body">No comments yet</p>
                 )}
               </p>
-              {isAuthenticaded && !newComment && (
-                <p className="p-newComment" onClick={() => setNewComment(true)}>
+              {!newComment && (
+                <p
+                  className="p-newComment"
+                  onClick={() => handleNewComment(true)}
+                >
                   Add Comment
                 </p>
               )}
@@ -113,7 +128,11 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
       </div>
 
       {isAuthenticaded && newComment && (
-        <EntryComment submitComment={submitComment} entryId={entry.uid} />
+        <EntryComment
+          submitComment={submitComment}
+          entryId={entry.uid}
+          setNewComment={setNewComment}
+        />
       )}
     </div>
   );

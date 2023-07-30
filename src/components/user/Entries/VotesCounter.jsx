@@ -2,13 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { voteEntry } from "../../../actions/entries";
 import Modal from "react-modal";
-import useModal from "../../../hooks/useModal";
 import ModalDialogLogin from "../../modals/ModalDialogLogin";
 import { getCustomStyles } from "../modalStyles";
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
 import { useNavigate } from "react-router-dom";
 
-const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
+const VotesCounter = ({
+  votesNumber,
+  id,
+  voted = 0,
+  isModalOpen,
+  openModal,
+  closeModal,
+}) => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
@@ -30,7 +36,6 @@ const VotesCounter = ({ votesNumber, id, voted = 0 }) => {
     }
   }, [isAuthenticated, voted]);
 
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [action, setAction] = useState("");
 
   const btnUpvote = useRef();
