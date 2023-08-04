@@ -108,8 +108,15 @@ export const startDeleteQuestion = (uid) => {
     try {
       await deleteEntry(uid);
       dispatch(deleteQuestion(uid));
+      return { success: true, errorMsg: null, statusCode: 200 };
     } catch (error) {
       console.error("Error deleting entry:", error);
+      const statusCode = error.response.status;
+      return {
+        success: false,
+        errorMsg: null,
+        statusCode,
+      };
     }
   };
 };
@@ -153,8 +160,16 @@ export const startAddComment = (entryId, comment) => {
       if (response.data.ok) {
         dispatch(addComment(entryId, response.data.comment));
       }
+
+      return { success: true, errorMsg: null, statusCode: 200 };
     } catch (error) {
-      console.error("Error adding comment:", error);
+      console.log(error, "ajjaja");
+
+      return {
+        success: false,
+        errorMsg: null,
+        statusCode,
+      };
     }
   };
 };

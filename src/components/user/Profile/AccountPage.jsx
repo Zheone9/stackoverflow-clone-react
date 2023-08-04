@@ -4,31 +4,26 @@ import { useFormik } from "formik";
 import { accountSettingsSchema } from "../../../helpers/formValidation/formSchema.js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUsername } from "../../../helpers/header/selectUsername.js";
-import Snackbar from "@mui/material/Snackbar";
-import SnackbarContent from "@mui/material/SnackbarContent";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import Box from "@mui/material/Box";
 import {
   startChangeUsername,
   uploadProfilePicture,
 } from "../../../actions/account.js";
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
 import ChangeUsername from "./ChangeUsername.jsx";
-import { Slide } from "@mui/material";
+import CustomSnackbar from "./CustomSnackbar.jsx";
 
 const AccountPage = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  const [messageSnackbar, setMessageSnackbar] = useState(null);
   const [open, setOpen] = useState(false);
+  const [fileName, setFileName] = useState(null);
   const dispatch = useDispatch();
   const username = useSelector(selectUsername);
   const initialValues = {
     username,
     avatar: "",
   };
-  function TransitionUp(props) {
-    return <Slide {...props} direction="up" />;
-  }
 
   const userPicture = useSelector((state) => state.auth.user.picture);
   const [avatar, setAvatar] = useState(
@@ -55,10 +50,11 @@ const AccountPage = () => {
         await handleLogoutWithPreviousPage(dispatch);
       } else if (statusCode === 400) {
         setErrorMsg("This username is already taken");
+        return;
       } else {
         setOpen(true);
         setInitialUserName(values.username);
-        setSuccessMsg("Usuario cambiado exitosamente");
+        setMessageSnackbar("Cambios guardados exitosamente");
       }
     }
     if (avatar !== initialAvatar) {
@@ -67,9 +63,12 @@ const AccountPage = () => {
       );
       console.log(success);
       if (success) {
+        setFileName(null);
         setInitialAvatar(avatar);
         setOpen(true);
-        setSuccessMsg("Avatar cambiado exitosamente");
+        setMessageSnackbar("Cambios guardados exitosamente");
+      } else if (statusCode === 401) {
+        await handleLogoutWithPreviousPage(dispatch);
       }
     }
   };
@@ -89,7 +88,7 @@ const AccountPage = () => {
     console.log("a");
   };
   return (
-    <div className="text-center">
+    <div className="text-center max-w-1000">
       <form style={{ display: "none" }} onChange={handleFieldChange} />
       <ChangeUsername
         formik={formik}
@@ -98,7 +97,12 @@ const AccountPage = () => {
         open={open}
         setOpen={setOpen}
       />
-      <ChangeAvatar avatar={avatar} setAvatar={setAvatar} />
+      <ChangeAvatar
+        avatar={avatar}
+        setAvatar={setAvatar}
+        setFileName={setFileName}
+        fileName={fileName}
+      />
       <div className="div-btn-login" style={{ textAlign: "right" }}>
         <button
           className="btn btn-primary"
@@ -108,28 +112,12 @@ const AccountPage = () => {
           Save
         </button>
       </div>
-      <Snackbar
-        open={open}
+      <CustomSnackbar
+        message={messageSnackbar}
         onClose={handleClose}
-        message="Cambios guardados exitosamente"
-        direction="left"
-        autoHideDuration={1600}
-        TransitionComponent={TransitionUp}
-      >
-        <SnackbarContent
-          message={
-            <Box display="flex" alignItems="center">
-              <CheckBoxIcon />
-              Cambios guardados exitosamente
-            </Box>
-          }
-          sx={{
-            backgroundColor: "#3D8EB9",
-            color: "white",
-            fontSize: "0.77rem",
-          }}
-        />
-      </Snackbar>
+        setOpen={setOpen}
+        open={open}
+      />
     </div>
   );
 };

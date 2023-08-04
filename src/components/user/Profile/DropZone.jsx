@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const DropZone = ({ setAvatar }) => {
+const DropZone = ({ setAvatar, setFileName, setIsInvalidFileType }) => {
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
+    if (!file) {
+      return;
+    }
+    const acceptedTypes = ["image/jpeg", "image/png"];
+    const fileExtension = file.type.toLowerCase();
+
+    if (!acceptedTypes.includes(fileExtension)) {
+      setIsInvalidFileType(true);
+      return;
+    }
+
+    setIsInvalidFileType(false);
+
     const reader = new FileReader();
 
     reader.onload = () => {
       setAvatar(reader.result);
       console.log(reader.result);
+      setFileName(file.name);
     };
 
     reader.readAsDataURL(file);
   };
+
   const {
     getRootProps,
     getInputProps,
@@ -24,16 +39,14 @@ const DropZone = ({ setAvatar }) => {
   });
 
   return (
-    <div className="div-select-image" {...getRootProps()}>
+    <div className="div-select-image h-100" {...getRootProps()}>
       <input {...getInputProps()} />
       {!isDragActive && (
         <p className="text-gray-400">
           Haz clic aquí o arrastra una imagen para subirla
         </p>
       )}
-      {isDragActive && !isDragReject && "Suelta la imagen para subirla"}
-      {isDragReject &&
-        "El tipo de archivo no es válido. Por favor, sube una imagen PNG o JPEG"}
+      {isDragActive && !isDragReject && <p>Suelta la imagen para subirla</p>}
     </div>
   );
 };

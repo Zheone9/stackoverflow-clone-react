@@ -7,9 +7,9 @@
   width: 100%;
   background-color: white;
   border-top-left-radius: 20px;
-
+  display: flex;
+  justify-content: center;
   height: calc(100vh - 70px);
-
   .div-btn-login {
     text-align: start;
   }

@@ -86,7 +86,6 @@ body {
   margin-bottom: 0.625rem;
   align-items: flex-start; /* Añadido */
   height: calc(100vh - 80px);
-
 }
 
 .p-4 {
@@ -97,12 +96,21 @@ body {
   text-align: center;
 }
 
-
 .p-error-message {
   color: red;
   margin-top: 0.7rem;
   margin-bottom: 0;
   text-align: center;
+}
+.f-column {
+  flex-direction: column;
+}
+
+.max-w-1000 {
+  max-width: 1000px;
+}
+.h-100 {
+  min-height: 100px;
 }
 
 .text-start {

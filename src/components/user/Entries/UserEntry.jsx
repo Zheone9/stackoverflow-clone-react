@@ -13,6 +13,8 @@ import {
 } from "../../../actions/entries.js";
 import { selectPicture } from "../../../helpers/header/selectUsername.js";
 import EntryComment from "./EntryComment";
+import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils";
+import { useNavigate } from "react-router-dom";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
@@ -20,6 +22,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const [newComment, setNewComment] = useState(false);
   const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const picture = useSelector(selectPicture);
   const handleNewComment = () => {
     if (!isAuthenticaded) {
@@ -29,11 +32,23 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
     setNewComment(true);
   };
   const handleDeleteQuestion = async () => {
-    await dispatch(startDeleteQuestion(entry.uid));
+    const { success, errorMsg, statusCode } = await dispatch(
+      startDeleteQuestion(entry.uid)
+    );
+    if (statusCode === 401) {
+      await handleLogoutWithPreviousPage(dispatch);
+      return navigate("/auth/login");
+    }
   };
 
   const submitComment = async (entryId, comment) => {
-    await dispatch(startAddComment(entryId, comment));
+    const { success, errorMsg, statusCode } = await dispatch(
+      startAddComment(entryId, comment)
+    );
+    if (statusCode === 401) {
+      await handleLogoutWithPreviousPage(dispatch);
+      return navigate("/auth/login");
+    }
   };
 
   const menuItems = [
