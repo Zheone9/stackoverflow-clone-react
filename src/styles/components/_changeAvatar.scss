@@ -45,3 +45,9 @@
     height: 90px;
   }
 }
+.btn-save-disabled {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}

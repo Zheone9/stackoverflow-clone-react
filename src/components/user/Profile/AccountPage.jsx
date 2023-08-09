@@ -11,6 +11,7 @@ import {
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils.js";
 import ChangeUsername from "./ChangeUsername.jsx";
 import CustomSnackbar from "./CustomSnackbar.jsx";
+import clsx from "clsx";
 
 const AccountPage = () => {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -18,6 +19,7 @@ const AccountPage = () => {
   const [messageSnackbar, setMessageSnackbar] = useState(null);
   const [open, setOpen] = useState(false);
   const [fileName, setFileName] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const username = useSelector(selectUsername);
   const initialValues = {
@@ -42,35 +44,49 @@ const AccountPage = () => {
 
   const onSubmit = async (values) => {
     resetMessages();
+    const promises = [];
     if (values.username !== initialUserName) {
-      const { success, errorMsg, statusCode } = await dispatch(
-        startChangeUsername(values.username)
+      const promise = dispatch(startChangeUsername(values.username)).then(
+        ({ success, errorMsg, statusCode }) => {
+          if (statusCode === 400) {
+            setErrorMsg("This username is already taken");
+          }
+          if (statusCode === 200) {
+            setInitialUserName(values.username);
+          }
+          return { success, statusCode };
+        }
       );
-      if (statusCode === 401) {
-        await handleLogoutWithPreviousPage(dispatch);
-      } else if (statusCode === 400) {
-        setErrorMsg("This username is already taken");
-        return;
-      } else {
-        setOpen(true);
-        setInitialUserName(values.username);
-        setMessageSnackbar("Cambios guardados exitosamente");
-      }
+      promises.push(promise);
     }
     if (avatar !== initialAvatar) {
-      const { success, errorMsg, statusCode } = await dispatch(
-        uploadProfilePicture(avatar)
+      const promise = dispatch(uploadProfilePicture(avatar)).then(
+        ({ success, statusCode }) => {
+          if (success) {
+            setFileName(null);
+            setInitialAvatar(avatar);
+          }
+          return { success, statusCode };
+        }
       );
-      console.log(success);
-      if (success) {
-        setFileName(null);
-        setInitialAvatar(avatar);
-        setOpen(true);
-        setMessageSnackbar("Cambios guardados exitosamente");
-      } else if (statusCode === 401) {
-        await handleLogoutWithPreviousPage(dispatch);
-      }
+      promises.push(promise);
     }
+    setIsLoading(true);
+    const results = await Promise.allSettled(promises);
+    let shouldLogout = false;
+
+    results.forEach(({ success, statusCode }) => {
+      if (!success && statusCode === 401) {
+        shouldLogout = true;
+      }
+    });
+    if (shouldLogout) {
+      await handleLogoutWithPreviousPage(dispatch);
+      return;
+    }
+    setIsLoading(false);
+    setOpen(true);
+    setMessageSnackbar("Cambios guardados exitosamente");
   };
   const resetMessages = () => {
     setErrorMsg(null);
@@ -105,7 +121,9 @@ const AccountPage = () => {
       />
       <div className="div-btn-login" style={{ textAlign: "right" }}>
         <button
-          className="btn btn-primary"
+          className={clsx("btn btn-primary", {
+            "btn-save-disabled": isLoading,
+          })}
           onClick={formik.handleSubmit}
           type="submit"
         >
