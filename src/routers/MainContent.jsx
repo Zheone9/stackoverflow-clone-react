@@ -14,6 +14,7 @@ import ChangeUsername from "../components/user/Profile/ChangeUsername.jsx";
 import { selectUsername } from "../helpers/header/selectUsername.js";
 import ChangeAvatar from "../components/user/Profile/ChangeAvatar.jsx";
 import AccountPage from "../components/user/Profile/AccountPage.jsx";
+import UserProfile from "../components/user/UserProfile";
 
 const MainContent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -58,6 +59,7 @@ const MainContent = () => {
           <Route index element={<Navigate to="/profile/dashboard" />} />
           <Route path="*" element={<Navigate to="/profile/dashboard" />} />
         </Route>
+        <Route path="/user/:username" element={<UserProfile />} />
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </StyledContainer>

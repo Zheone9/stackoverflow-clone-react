@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import ChangeAvatar from "./ChangeAvatar.jsx";
 import { useFormik } from "formik";
 import { accountSettingsSchema } from "../../../helpers/formValidation/formSchema.js";
@@ -44,17 +44,20 @@ const AccountPage = () => {
 
   const onSubmit = async (values) => {
     resetMessages();
+    let shouldLogout = false;
     const promises = [];
     if (values.username !== initialUserName) {
       const promise = dispatch(startChangeUsername(values.username)).then(
-        ({ success, errorMsg, statusCode }) => {
+        ({ statusCode }) => {
+          if (statusCode === 401) {
+            shouldLogout = true;
+          }
           if (statusCode === 400) {
             setErrorMsg("This username is already taken");
           }
           if (statusCode === 200) {
             setInitialUserName(values.username);
           }
-          return { success, statusCode };
         }
       );
       promises.push(promise);
@@ -66,27 +69,22 @@ const AccountPage = () => {
             setFileName(null);
             setInitialAvatar(avatar);
           }
-          return { success, statusCode };
+          if (statusCode === 401) {
+            shouldLogout = true;
+          }
         }
       );
       promises.push(promise);
     }
     setIsLoading(true);
-    const results = await Promise.allSettled(promises);
-    let shouldLogout = false;
-
-    results.forEach(({ success, statusCode }) => {
-      if (!success && statusCode === 401) {
-        shouldLogout = true;
-      }
-    });
+    await Promise.allSettled(promises);
     if (shouldLogout) {
       await handleLogoutWithPreviousPage(dispatch);
       return;
     }
-    setIsLoading(false);
     setOpen(true);
     setMessageSnackbar("Cambios guardados exitosamente");
+    setIsLoading(false);
   };
   const resetMessages = () => {
     setErrorMsg(null);

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React from "react";
 
 const UserInfo = ({ author }) => {
@@ -11,7 +12,9 @@ const UserInfo = ({ author }) => {
           ></img>
         </div>
         <div>
-          <div className="div-userName">{author.username}</div>
+          <Link className="div-userName" to={`/user/${author.username}`}>
+            {author.username}
+          </Link>
           <div className="div-userPoints">{author.reputation}</div>
         </div>
       </div>

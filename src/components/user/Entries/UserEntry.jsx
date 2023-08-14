@@ -14,7 +14,7 @@ import {
 import { selectPicture } from "../../../helpers/header/selectUsername.js";
 import EntryComment from "./EntryComment";
 import { handleLogoutWithPreviousPage } from "../../../helpers/auth/authUtils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
@@ -118,9 +118,14 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
                   entry.comments.map((comment) => (
                     <div key={comment.uid} className="div-comment">
                       <p className="comment-body">{comment.body}</p>
-                      <p className="comment-author">
-                        - {comment.user.username}
-                      </p>
+
+                      <Link
+                        to={`/user/${comment.user.username}`}
+                        className="comment-author"
+                      >
+                        {comment.user.username}
+                      </Link>
+
                       <p>Created at: {comment.createdAt}</p>
                       <hr />
                     </div>
