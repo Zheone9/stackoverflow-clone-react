@@ -1,0 +1,45 @@
+.div-container-userImage-profile {
+  padding-top: 3.8rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.div-userReputation {
+  width: 20px;
+  height: 20px;
+}
+.div-username-reputation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.div-user-info {
+  margin-top: 1.8rem;
+  margin-left: 1rem;
+}
+
+.buttons-profile {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.div-joinDate-profile {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1.7rem;
+  margin-left: -5.7rem;
+  gap: 0.5rem;
+
+  .p-joinDate-profile {
+    font-weight: 600;
+    font-size: small;
+  }
+
+  .p-date-profile {
+    font-size: small;
+  }
+}

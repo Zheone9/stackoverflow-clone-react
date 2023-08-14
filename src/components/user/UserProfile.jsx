@@ -32,20 +32,40 @@ const UserProfile = () => {
 
   console.log(userProfile.picture);
   return (
-    <div className="text-center">
-      {userProfile.username}
-      <div className="div-container-userImage">
-        <div
-          className="div-userImage"
-          style={{
-            backgroundImage: `url(${userProfile.picture})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
+    <div className="div-container-userImage-profile">
+      <div
+        className="div-userImage"
+        style={{
+          backgroundImage: `url(${userProfile.picture})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></div>
+      <div className="div-user-info">
+        <h3>{userProfile.username}</h3>
+        <div className="div-username-reputation">
+          <div
+            className="div-userReputation"
+            style={{
+              backgroundImage:
+                "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1691991971/moneda-realista-dolares_1692-75_1_yuujys.avif)",
+              backgroundSize: "cover",
+            }}
+          ></div>
+          <p>{userProfile.reputation}</p>
+        </div>
+        <div className="buttons-profile">
+          <button className="btn-add-friend">Add friend</button>
+          <button className="btn-report">Report</button>
+        </div>
+
+        <div className="div-joinDate-profile">
+          <p className="p-joinDate-profile">Join Date</p>
+          <p className="p-date-profile">
+            {new Date(userProfile.joinDate).toLocaleDateString()}
+          </p>
+        </div>
       </div>
-      <p>Join date: {new Date(userProfile.joinDate).toLocaleDateString()}</p>
-      <p> Reputation: {userProfile.reputation}</p>
     </div>
   );
 };

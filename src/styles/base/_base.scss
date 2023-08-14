@@ -154,3 +154,29 @@ h2 {
     font-size: 0.87rem;
   }
 }
+
+.btn-add-friend {
+  color: white;
+  background-color: #4d74ff;
+  padding: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  border: none;
+  font-weight: 100;
+  transition: all 0.3s ease;
+}
+
+.btn-report {
+  color: white;
+  background-color: #ff3541;
+  padding: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  border: none;
+  font-weight: 100;
+  transition: all 0.3s ease;
+}
