@@ -45,8 +45,6 @@ const CreateNewEntry = () => {
   }, []);
   const handleSubmit = async (values, actions) => {
     const isValid = validateForm(values);
-    console.log(values);
-    console.log(isValid);
     if (isValid) {
       const success = await dispatch(startNewQuestion(values));
       if (!success) return console.log("crear nueva pregunta falló");
