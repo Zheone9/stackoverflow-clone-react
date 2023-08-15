@@ -1,29 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useModal from "../../hooks/useModal";
 import Modal from "react-modal";
 import ModalDialogLogin from "../modals/ModalDialogLogin";
 import { getCustomStyles } from "./modalStyles";
 import clsx from "clsx";
+import {
+  startAddFriend,
+  startCancelFriendRequest,
+  startRemoveFriend,
+} from "../../actions/user";
+import axios from "axios";
 
 const UserProfile = () => {
   const { username } = useParams();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const APIURL = import.meta.env.VITE_REACT_API_URL;
+  const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState(null);
   const { isModalOpen, openModal, closeModal } = useModal();
-  const usernameLogged = useSelector((state) => state.auth.user.username);
+  const usernameLogged = useSelector((state) => state.auth.user?.username);
   const [isFriend, setIsFriend] = useState(false);
   const [sentFriendRequest, setSentFriendRequest] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const handleAddFriend = () => {
+  const handleAddFriend = async () => {
     if (!isAuthenticated) {
       openModal();
       return;
     }
-    if (sentFriendRequest) return;
+    if (sentFriendRequest) {
+      await dispatch(startCancelFriendRequest(username));
+      setSentFriendRequest(false);
+      return;
+    }
+    if (isFriend) {
+      await dispatch(startRemoveFriend(username));
+      setIsFriend(false);
+      setSentFriendRequest(false);
+      return;
+    }
+
+    dispatch(startAddFriend(username));
     setSentFriendRequest(true);
   };
 
@@ -36,27 +55,60 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch(`${APIURL}/users/${username}`);
-        const data = await response.json();
-        setUserProfile(data.payload);
-        setIsLoading(false);
+        const response = await axios.get(
+          `${APIURL}/users/get-user/${username}`
+        );
+        setUserProfile(response.data.payload);
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
     };
 
-    fetchUserProfile();
-  }, [username]);
+    const fetchData = async () => {
+      if (isAuthenticated) {
+        try {
+          const [
+            isFriendResponse,
+            sentFriendRequestResponse,
+          ] = await Promise.all([
+            axios.get(`${APIURL}/users/is-friend/${username}`, {
+              withCredentials: true,
+            }),
+            axios.get(`${APIURL}/users/check-friend-request/${username}`, {
+              withCredentials: true,
+            }),
+          ]);
+
+          setIsFriend(isFriendResponse.data.isFriend);
+          setSentFriendRequest(
+            sentFriendRequestResponse.data.friendRequestSent
+          );
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      } else {
+        setIsFriend(false);
+        setSentFriendRequest(false);
+      }
+    };
+
+    const fetchDataAndProfile = async () => {
+      await fetchUserProfile();
+      await fetchData();
+      setIsLoading(false);
+    };
+
+    fetchDataAndProfile();
+  }, [isAuthenticated, username]);
 
   if (isLoading) {
     return <LoadingScreen color={"#0a95ff"} />;
   }
 
-  if (!userProfile) {
-    return <div>User not found</div>;
+  if (!isLoading && !userProfile) {
+    return <h1>User not found</h1>;
   }
 
-  console.log(userProfile.picture);
   return (
     <div className="div-container-userImage-profile">
       <Modal
@@ -92,15 +144,21 @@ const UserProfile = () => {
         {usernameLogged !== userProfile.username ? (
           <div className="buttons-profile">
             <button
-              className={clsx("btn-add-friend", {
-                "sent-friend-request": sentFriendRequest,
-              })}
+              className={clsx(
+                "btn-add-friend",
+                {
+                  "sent-friend-request": sentFriendRequest,
+                },
+                {
+                  "sent-friend-request": isFriend,
+                }
+              )}
               onClick={() => handleAddFriend()}
             >
               {sentFriendRequest
                 ? "Request sent"
                 : isFriend
-                ? "Friend"
+                ? "Remove friend"
                 : "Add friend"}
             </button>
             <button className="btn-report" onClick={() => handleReport()}>

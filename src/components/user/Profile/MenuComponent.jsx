@@ -1,0 +1,144 @@
+import Box from "@mui/material/Box";
+
+import Menu from "@mui/material/Menu";
+
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import * as React from "react";
+import FriendRequestList from "./FriendRequestList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  startGetFriendRequestsReceived,
+  startOpenedFriendRequestsReceived,
+} from "../../../actions/user";
+
+const MenuComponent = ({ handleLogout, usernameLetter, picture }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const menuRef = React.useRef(null);
+  const { friendRequestsReceived } = useSelector((state) => state.user);
+  const { openedFriendRequests } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    const getFriendList = async () => {
+      await dispatch(startGetFriendRequestsReceived());
+      setIsLoading(false);
+    };
+    getFriendList();
+  }, [dispatch]);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    if (!openedFriendRequests) {
+      dispatch(startOpenedFriendRequestsReceived());
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleItemClick = (event) => {
+    event.stopPropagation(); // Evita que el menú se cierre al hacer clic dentro del elemento del menú
+  };
+
+  const handleContainerClick = (event) => {
+    if (menuRef.current && menuRef.current.contains(event.target)) {
+      event.stopPropagation(); // Evita que el menú se cierre al hacer clic dentro del menú
+    } else {
+      handleClose();
+    }
+  };
+
+  const APIURL = import.meta.env.VITE_REACT_API_URL;
+
+  return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+        onMouseDown={handleContainerClick}
+      >
+        <Tooltip title="Friends request">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{
+              boxShadow: "none",
+              ml: 2,
+            }}
+            aria-controls={anchorEl ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={Boolean(anchorEl)}
+          >
+            <div className="friend-requests-badge">
+              <PeopleAltIcon
+                className="icon-friend-requests"
+                sx={{
+                  "&:hover": {
+                    color: "#000", // Cambia esto al color de hover deseado
+                  },
+                }}
+              />
+              {!openedFriendRequests && friendRequestsReceived.length > 0 && (
+                <div className="badge">{friendRequestsReceived.length}</div>
+              )}
+            </div>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        onClick={handleItemClick}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            width: 235, // Tamaño fijo del menú
+            // marginTop: 1.5, // Margen superior fijo
+            filter: "drop-shadow(0px 2px 2px rgba(0,0,  0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+            "& li": {
+              fontSize: "0.8rem", // Tamaño de letra personalizado para los elementos del menú
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <FriendRequestList
+          isLoading={isLoading}
+          friendRequestsReceived={friendRequestsReceived}
+        />
+      </Menu>
+    </>
+  );
+};
+
+export default MenuComponent;

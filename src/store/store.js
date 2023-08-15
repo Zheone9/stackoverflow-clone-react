@@ -4,6 +4,7 @@ import {
   configureStore,
 } from "@reduxjs/toolkit";
 import { userEntryReducer } from "../reducers/userEntryReducer";
+import { userReducer } from "../reducers/userReducer";
 import authReducer from "../reducers/authReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Usa el almacenamiento local predeterminado
@@ -18,6 +19,7 @@ const persistConfig = {
 const reducer = combineReducers({
   userEntries: userEntryReducer,
   auth: authReducer,
+  user: userReducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 

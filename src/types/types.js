@@ -14,4 +14,12 @@ export const types = {
   setPreviousPage: "[Auth] setPreviousPage",
   uploadProfilePicture: "[Account] UploadProfilePicture",
   addComment: "[Entry] AddComment",
+  sentFriendRequest: "[Friend] SentFriendRequest",
+  receivedFriendRequest: "[Friend] ReceivedFriendRequest",
+  getFriendList: "[Friend] GetFriendList",
+  acceptFriendRequest: "[Friend] AcceptFriendRequest",
+  rejectFriendRequest: "[Friend] RejectFriendRequest",
+  removeFriend: "[Friend] RemoveFriend",
+  getFriendRequestsReceived: "[Friend] GetFriendRequestsReceived",
+  openFriendRequests: "[Friend] OpenFriendRequestsReceived",
 };

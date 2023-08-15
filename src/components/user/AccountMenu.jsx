@@ -1,6 +1,6 @@
 import Box from "@material-ui/core/Box";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
+import MenuComponent from "./Profile/MenuComponent.jsx";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
@@ -11,8 +11,10 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Menu } from "@mui/material";
 
-const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
+const AccountMenu = ({ handleLogout, usernameLetter, picture, username }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -23,7 +25,9 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
     setAnchorEl(null);
   };
   return (
-    <div>
+    <div className="menus-profile">
+      <MenuComponent />
+
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
           <IconButton
@@ -94,7 +98,7 @@ const AccountMenu = ({ handleLogout, usernameLetter, picture }) => {
             navigate("/profile/dashboard");
           }}
         >
-          <Avatar src={picture} /> My account
+          <Avatar src={picture} /> {username}
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => handleLogout()}>

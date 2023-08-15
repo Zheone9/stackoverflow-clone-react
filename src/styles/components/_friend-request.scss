@@ -1,0 +1,36 @@
+.friend-request {
+  padding: 0.8rem;
+}
+.div-user-info-fr {
+  padding: 0.345rem;
+}
+
+.div-userImage-fr {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.div-container-userImage-profile-fr {
+  display: flex;
+  padding: 0.345rem;
+}
+
+.h4-friend-requests {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+.p-friend-requests {
+  text-align: center;
+  font-size: small;
+}
+
+.p-loading-friendRequests {
+  padding: 0.234rem;
+  font-size: small;
+  text-align: center;
+}

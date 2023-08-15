@@ -1,12 +1,21 @@
 header {
   background: #085078;
   box-shadow: 0 1.5px 3px hsla(0, 0%, 0%, 0.05),
-  0 1.5px 6px hsla(0, 0%, 0%, 0.05), 0 3px 12px hsla(0, 0%, 0%, 0.05);
+    0 1.5px 6px hsla(0, 0%, 0%, 0.05), 0 3px 12px hsla(0, 0%, 0%, 0.05);
   top: 0;
   left: 0;
 }
+.menus-profile {
+  display: flex;
+}
 
-
+.div-NotificationsIcon {
+  position: absolute;
+  right: 90px;
+  top: 13px;
+  color: white;
+  cursor: pointer;
+}
 .div-buttons .btn {
   width: 5rem;
   height: 2.2rem;
@@ -18,7 +27,6 @@ header {
 }
 
 .mobile-logo {
-
   cursor: pointer;
 }
 
@@ -34,7 +42,6 @@ header {
   }
 }
 
-
 .container-header {
   position: relative;
   display: flex; /* Agregar esta línea */
@@ -45,7 +52,6 @@ header {
   //max-width: 1400px;
   margin: 0 auto;
   height: 70px;
-
 }
 
 .icon-menubar {
@@ -57,15 +63,12 @@ header {
   color: $dark-blue !important;
   left: 0 !important;
   position: absolute !important;
-
 }
-
 
 @media screen and (min-width: 768px) {
   .icon-menubar {
     display: none !important;
   }
-
 }
 
 @media screen and (max-width: 768px) {
@@ -85,5 +88,29 @@ header {
   .div-buttons {
     margin-bottom: 20px;
   }
+}
 
+.friend-requests-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-friend-requests {
+  font-size: 2rem; /* Tamaño del icono */
+  margin-top: 0.8rem;
+}
+
+.badge {
+  position: absolute;
+  top: -1px; /* Ajusta la posición vertical */
+  right: -13px; /* Ajusta la posición horizontal */
+  background-color: red; /* Color de fondo del círculo */
+  color: white; /* Color del texto del número */
+  border-radius: 50%; /* Forma circular */
+  width: 20px; /* Ancho del círculo */
+  height: 20px; /* Alto del círculo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem; /* Tamaño del número */
 }
