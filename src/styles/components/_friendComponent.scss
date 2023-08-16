@@ -1,0 +1,47 @@
+.div-border-friendList {
+  border: 3px solid #3247ff;
+  width: 400px;
+  margin-top: 1.5rem;
+  border-radius: 5px;
+  height: auto;
+}
+
+.div-header-friendList {
+  background-color: #3247ff;
+  height: 20px;
+  width: 397px;
+  color: white;
+  padding-left: 0.9rem;
+  font-weight: bold;
+}
+
+.div-grid-friendList {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 3 columnas de igual ancho */
+  grid-template-rows: repeat(2, 1fr); /* 2 filas de igual alto */
+  gap: 10px; /* Espacio entre celdas */
+}
+
+.user-card {
+  color: black;
+}
+
+.friend-info {
+  color: black;
+  padding-top: 2.2rem;
+  padding-left: 0.8rem;
+}
+
+.div-grid-friendList {
+  .div-userImage {
+    width: 60px;
+    height: 60px;
+  }
+  .friend-info {
+    padding-top: 1.34rem;
+    h3 {
+      font-size: smaller;
+    }
+  }
+}

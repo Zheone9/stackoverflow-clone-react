@@ -60,3 +60,22 @@
     justify-content: center;
   }
 }
+
+.container-user-profile {
+  display: flex;
+  flex-direction: row;
+  max-height: 100px;
+}
+
+.user-info {
+  margin-top: 1.8rem;
+  margin-left: 1rem;
+  max-height: fit-content;
+}
+
+.username-reputation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.1rem;
+}

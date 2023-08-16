@@ -9,13 +9,14 @@ export const logoutUser = () => {
   };
 };
 
-export const login = ({ uid, username, picture }) => {
+export const login = ({ uid, username, picture, reputation }) => {
   return {
     type: types.userLoggedIn,
     payload: {
       username,
       uid,
       picture,
+      reputation,
     },
   };
 };
