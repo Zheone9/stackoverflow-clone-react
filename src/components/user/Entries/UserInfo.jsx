@@ -15,7 +15,17 @@ const UserInfo = ({ author }) => {
           <Link className="div-userName" to={`/user/${author.username}`}>
             {author.username}
           </Link>
-          <div className="div-userPoints">{author.reputation}</div>
+          <div className="username-reputation">
+            <div
+              className="div-userReputation"
+              style={{
+                backgroundImage:
+                  "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1692221976/uploads/image-1692221975233.png)",
+                backgroundSize: "cover",
+              }}
+            ></div>
+            <p>{author.reputation}</p>
+          </div>
         </div>
       </div>
     </div>

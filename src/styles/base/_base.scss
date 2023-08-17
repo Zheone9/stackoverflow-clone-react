@@ -164,7 +164,12 @@ h2 {
   font-size: small;
   cursor: pointer;
 }
-
+a {
+  text-decoration: none;
+}
+.link-friend-request {
+  color: black;
+}
 .btn-report {
   color: white;
   background-color: #ff3541;

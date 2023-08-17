@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-
+import clsx from "clsx";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import * as React from "react";
 import FriendRequestList from "./FriendRequestList";
@@ -52,8 +52,6 @@ const MenuComponent = ({ handleLogout, usernameLetter, picture }) => {
     }
   };
 
-  const APIURL = import.meta.env.VITE_REACT_API_URL;
-
   return (
     <>
       <Box
@@ -78,12 +76,12 @@ const MenuComponent = ({ handleLogout, usernameLetter, picture }) => {
           >
             <div className="friend-requests-badge">
               <PeopleAltIcon
-                className="icon-friend-requests"
-                sx={{
-                  "&:hover": {
-                    color: "#000", // Cambia esto al color de hover deseado
+                className={clsx(
+                  {
+                    "unopened-friend-request": !openedFriendRequests,
                   },
-                }}
+                  "icon-friend-requests"
+                )}
               />
               {!openedFriendRequests && friendRequestsReceived.length > 0 && (
                 <div className="badge">{friendRequestsReceived.length}</div>

@@ -1,7 +1,7 @@
 .div-border-friendList {
   border: 3px solid #3247ff;
   width: 400px;
-  margin-top: 1.5rem;
+  margin-top: 3.8rem;
   border-radius: 5px;
   height: auto;
 }
@@ -13,6 +13,7 @@
   color: white;
   padding-left: 0.9rem;
   font-weight: bold;
+  font-size: smaller;
 }
 
 .div-grid-friendList {
@@ -30,7 +31,7 @@
 .friend-info {
   color: black;
   padding-top: 2.2rem;
-  padding-left: 0.8rem;
+  padding-left: 0.3rem;
 }
 
 .div-grid-friendList {
@@ -38,10 +39,15 @@
     width: 60px;
     height: 60px;
   }
+  a {
+    text-decoration: none;
+  }
   .friend-info {
     padding-top: 1.34rem;
     h3 {
       font-size: smaller;
+      text-decoration: none;
+      color: black;
     }
   }
 }

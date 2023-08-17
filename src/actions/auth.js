@@ -20,6 +20,7 @@ export const login = ({ uid, username, picture, reputation }) => {
     },
   };
 };
+
 export const setPreviousPage = (previousPage) => ({
   type: types.setPreviousPage,
   payload: previousPage,
@@ -40,6 +41,7 @@ export const startLoginUsernamePassword = (username, password) => {
       );
 
       dispatch(login(response.data.payload));
+      dispatch(getFriendList(response.data.payload.friendList));
       return { success: true, errorMsg: null };
     } catch (error) {
       return { success: false, errorMsg: error.response.data.message };
@@ -60,8 +62,8 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
           withCredentials: true,
         }
       );
-      console.log(response.data.payload);
       dispatch(login(response.data.payload));
+      dispatch(getFriendList(response.data.payload.friendList));
       return true;
     } catch (error) {
       // dispatch({ type: LOGIN_WITH_GOOGLE_FAILURE, payload: error.response.data.message });
@@ -69,6 +71,11 @@ export const startLoginWithGoogle = (clientId, tokenId) => {
     }
   };
 };
+
+const getFriendList = (friendList) => ({
+  type: types.getFriendList,
+  payload: friendList,
+});
 
 export const startRegisterWithEmail = (username, email, password) => {
   return async (dispatch) => {
@@ -86,6 +93,7 @@ export const startRegisterWithEmail = (username, email, password) => {
         }
       );
       dispatch(login(response.data.payload));
+      dispatch(getFriendList(response.data.payload.friendList));
       return {
         success: true,
         errorMsg: null,
@@ -111,6 +119,7 @@ export const startHandleLogout = () => {
       if (response.status === 200) {
         console.log("Logout successful");
         dispatch(logoutUser());
+        dispatch(purgeFriendState());
 
         return true;
       }
@@ -120,3 +129,7 @@ export const startHandleLogout = () => {
     }
   };
 };
+
+const purgeFriendState = () => ({
+  type: types.purgeFriendState,
+});

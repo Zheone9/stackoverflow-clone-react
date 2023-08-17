@@ -103,6 +103,13 @@ export const startCancelFriendRequest = (username) => {
 export const startAcceptFriendRequest = (username) => {
   return async (dispatch) => {
     try {
+      const responseFriendInfo = await axios.get(
+        `${APIURL}/users/get-user/${username}`,
+        {
+          withCredentials: true,
+        }
+      );
+      const friendInfo = responseFriendInfo.data.payload;
       await axios.post(
         `${APIURL}/users/accept-friend-request/${username}`,
         null,
@@ -110,7 +117,7 @@ export const startAcceptFriendRequest = (username) => {
           withCredentials: true,
         }
       );
-      dispatch(acceptFriendRequest(username));
+      dispatch(acceptFriendRequest(friendInfo));
       return {
         success: true,
         errorMsg: null,
@@ -177,6 +184,37 @@ const openFriendRequestsReceived = (value) => ({
   },
 });
 
+export const startDeclineFriendRequest = (username) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(
+        `${APIURL}/users/decline-friend-request/${username}`,
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(declineFriendRequest(username));
+      return {
+        success: true,
+        errorMsg: null,
+      };
+    } catch (error) {
+      console.error("Error declining friend request:", error);
+      return {
+        success: false,
+        errorMsg: error.response.data.message,
+      };
+    }
+  };
+};
+const declineFriendRequest = (username) => ({
+  type: types.rejectFriendRequest,
+  payload: {
+    username,
+  },
+});
+
 const getFriendRequestsReceived = (friendRequestsReceived) => ({
   type: types.getFriendRequestsReceived,
   payload: {
@@ -184,10 +222,10 @@ const getFriendRequestsReceived = (friendRequestsReceived) => ({
   },
 });
 
-const acceptFriendRequest = (username) => ({
+const acceptFriendRequest = (friendInfo) => ({
   type: types.acceptFriendRequest,
   payload: {
-    username,
+    friendInfo,
   },
 });
 

@@ -8,6 +8,7 @@ import ModalDialogLogin from "../modals/ModalDialogLogin";
 import { getCustomStyles } from "./modalStyles";
 import clsx from "clsx";
 import {
+  startAcceptFriendRequest,
   startAddFriend,
   startCancelFriendRequest,
   startRemoveFriend,
@@ -17,6 +18,12 @@ import axios from "axios";
 const UserProfile = () => {
   const { username } = useParams();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userSentFriendRequest = useSelector((state) =>
+    state.user.friendRequestsReceived.filter(
+      (friend) => friend.username === username
+    )
+  );
+
   const APIURL = import.meta.env.VITE_REACT_API_URL;
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState(null);
@@ -39,6 +46,12 @@ const UserProfile = () => {
       await dispatch(startRemoveFriend(username));
       setIsFriend(false);
       setSentFriendRequest(false);
+      return;
+    }
+
+    if (userSentFriendRequest.length > 0) {
+      await dispatch(startAcceptFriendRequest(username));
+      setIsFriend(true);
       return;
     }
 
@@ -135,7 +148,7 @@ const UserProfile = () => {
             className="div-userReputation"
             style={{
               backgroundImage:
-                "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1691991971/moneda-realista-dolares_1692-75_1_yuujys.avif)",
+                "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1692245839/moneda-realista-dolares_1692-75_woh8kb.webp)",
               backgroundSize: "cover",
             }}
           ></div>
@@ -159,6 +172,8 @@ const UserProfile = () => {
                 ? "Request sent"
                 : isFriend
                 ? "Remove friend"
+                : userSentFriendRequest.length > 0
+                ? "Accept friend request"
                 : "Add friend"}
             </button>
             <button className="btn-report" onClick={() => handleReport()}>

@@ -18,7 +18,7 @@ const ProfileInfo = ({ userProfile }) => {
             className="div-userReputation"
             style={{
               backgroundImage:
-                "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1691991971/moneda-realista-dolares_1692-75_1_yuujys.avif)",
+                "url(https://res.cloudinary.com/dzxhdnqm4/image/upload/v1692221976/uploads/image-1692221975233.png)",
               backgroundSize: "cover",
             }}
           ></div>

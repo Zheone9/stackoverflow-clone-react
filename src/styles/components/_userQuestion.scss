@@ -112,13 +112,22 @@ main {
 
   .div-comment {
     padding: 0.3em;
+    p {
+      margin-bottom: 0.2em;
+    }
   }
   .comment-author {
     color: #3d8eb9;
     text-decoration: none;
   }
+  .p-date-comment {
+    font-size: 0.6rem;
+    color: #8e8273;
+  }
 }
-
+.comment-author {
+  padding-bottom: 12rem;
+}
 .post-comment {
   display: flex;
   flex-direction: column;

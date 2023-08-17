@@ -8,9 +8,9 @@ import axios from "axios";
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const APIURL = import.meta.env.VITE_REACT_API_URL;
-  const [friends, setFriends] = useState([]);
   const user = useSelector((state) => state.auth.user);
   const [userProfile, setUserProfile] = useState(null);
+  const friendList = useSelector((state) => state.user.friendList);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -27,20 +27,8 @@ const Dashboard = () => {
       }
     };
 
-    const fetchFriendList = async () => {
-      try {
-        const response = await axios.get(`${APIURL}/users/get-friendList`, {
-          withCredentials: true,
-        });
-        setFriends(response.data.friendList);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-
     const fetchDataAndProfile = async () => {
       await fetchUserProfile();
-      await fetchFriendList();
       setIsLoading(false);
     };
     fetchDataAndProfile();
@@ -52,7 +40,7 @@ const Dashboard = () => {
   return (
     <div>
       <ProfileInfo userProfile={userProfile} />
-      <FriendListComponent friendList={friends} />
+      <FriendListComponent friendList={friendList} />
     </div>
   );
 };

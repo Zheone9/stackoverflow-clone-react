@@ -3,8 +3,14 @@
 }
 .div-user-info-fr {
   padding: 0.345rem;
+  padding-top: 0.7rem;
+  .buttons-profile {
+    margin-top: 0.7rem;
+  }
 }
-
+.unopened-friend-request {
+  color: black;
+}
 .div-userImage-fr {
   height: 50px;
   width: 50px;

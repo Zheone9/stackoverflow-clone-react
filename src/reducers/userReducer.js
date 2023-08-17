@@ -17,9 +17,9 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         friendRequestsReceived: state.friendRequestsReceived.filter(
-          (friend) => friend.username !== action.payload.username
+          (friend) => friend.username !== action.payload.friendInfo.username
         ),
-        friendList: [...state.friendList, action.payload.username],
+        friendList: [...state.friendList, action.payload.friendInfo],
       };
     case types.rejectFriendRequest:
       return {
@@ -29,7 +29,6 @@ export const userReducer = (state = initialState, action) => {
         ),
       };
     case types.removeFriend:
-      console.log(action.payload.username);
       return {
         ...state,
         friendList: state.friendList.filter(
@@ -47,6 +46,14 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         openedFriendRequests: action.payload.value,
+      };
+
+    case types.purgeFriendState:
+      return {
+        ...state,
+        friendList: [],
+        friendRequestsReceived: [],
+        openedFriendRequests: false,
       };
 
     default:

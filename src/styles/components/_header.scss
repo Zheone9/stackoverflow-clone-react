@@ -97,7 +97,10 @@ header {
 
 .icon-friend-requests {
   font-size: 2rem; /* Tamaño del icono */
-  margin-top: 0.8rem;
+  margin-top: 0.4rem;
+  &:hover {
+    color: black;
+  }
 }
 
 .badge {

@@ -7,6 +7,7 @@ import useModal from "../../../hooks/useModal";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlagIcon from "@mui/icons-material/Flag";
+import formatDateTime from "../../../helpers/entries/formatDateTime";
 import {
   startAddComment,
   startDeleteQuestion,
@@ -125,8 +126,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
                       >
                         {comment.user.username}
                       </Link>
-
-                      <p>Created at: {comment.createdAt}</p>
+                      <p className="p-date-comment">{formatDateTime(comment.createdAt)}</p>
                       <hr />
                     </div>
                   ))
