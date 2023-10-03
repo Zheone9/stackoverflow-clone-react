@@ -4,7 +4,6 @@ export const getCustomStylesRegisterUsername = () => {
       zIndex: 1000000,
       backgroundColor: "rgba(67, 67, 67, 0.93)",
     },
-
     content: {
       borderRadius: "4px",
       border: "1px",

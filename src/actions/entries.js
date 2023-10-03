@@ -163,12 +163,10 @@ export const startAddComment = (entryId, comment) => {
 
       return { success: true, errorMsg: null, statusCode: 200 };
     } catch (error) {
-      console.log(error, "ajjaja");
-
       return {
         success: false,
         errorMsg: null,
-        statusCode,
+        statusCode: 401,
       };
     }
   };
@@ -189,7 +187,11 @@ const addCommentToEntry = async (entryId, body) => {
       config
     );
   } catch (error) {
-    console.error("Error in axios.post:", error);
+    return {
+      success: false,
+      errorMsg: null,
+      statusCode: error.response.status,
+    };
   }
 };
 

@@ -215,7 +215,7 @@ const declineFriendRequest = (username) => ({
   },
 });
 
-const getFriendRequestsReceived = (friendRequestsReceived) => ({
+export const getFriendRequestsReceived = (friendRequestsReceived) => ({
   type: types.getFriendRequestsReceived,
   payload: {
     friendRequestsReceived,

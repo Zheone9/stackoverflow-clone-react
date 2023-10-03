@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-
 import { useDispatch } from "react-redux";
-
 import validateForm from "../../../helpers/newQuestion/validateForm";
 import { setNewQuestion, startNewQuestion } from "../../../actions/entries";
-
 import { newEntryValidationSchema } from "../../../helpers/formValidation/formSchema.js";
 import EntryForm from "../EntryForm.jsx";
 
@@ -33,6 +30,7 @@ const CreateNewEntry = () => {
       </button>
     </div>
   );
+
 
   const siteKeyHcaptcha = import.meta.env.VITE_REACT_HCAPTCHA_SITEKEY;
 

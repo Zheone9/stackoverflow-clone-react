@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FriendRequest from "./FriendRequest";
 import Divider from "@mui/material/Divider";
-import { useDispatch, useSelector } from "react-redux";
-import { startGetFriendRequestsReceived } from "../../../actions/user";
+import io from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { getFriendRequestsReceived } from "../../../actions/user";
+const socket = io("http://localhost:8080", {
+  withCredentials: true,
+});
 
 const FriendRequestList = ({ isLoading, friendRequestsReceived }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on("friendRequestSent", (data) => {
+      dispatch(getFriendRequestsReceived(data));
+    });
+  }, []);
+
   if (isLoading) return <p className="p-loading-friendRequests">Loading...</p>;
   return (
     <>
