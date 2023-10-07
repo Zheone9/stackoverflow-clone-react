@@ -23,4 +23,5 @@ export const types = {
   getFriendRequestsReceived: "[Friend] GetFriendRequestsReceived",
   openFriendRequests: "[Friend] OpenFriendRequestsReceived",
   purgeFriendState: "[Friend] PurgeFriendState",
+  newFriendRequest: "[Friend] NewFriendRequest",
 };

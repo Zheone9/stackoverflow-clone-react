@@ -32,11 +32,13 @@ const UserProfile = () => {
   const [isFriend, setIsFriend] = useState(false);
   const [sentFriendRequest, setSentFriendRequest] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
   const handleAddFriend = async () => {
     if (!isAuthenticated) {
       openModal();
       return;
     }
+
     if (sentFriendRequest) {
       await dispatch(startCancelFriendRequest(username));
       setSentFriendRequest(false);

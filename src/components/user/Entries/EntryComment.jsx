@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const EntryComment = ({ submitComment, entryId, setNewComment }) => {
+const EntryComment = ({
+  submitComment,
+  entryId,
+  setNewComment,
+  errorMsgComment,
+}) => {
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (event) => {
@@ -29,6 +34,10 @@ const EntryComment = ({ submitComment, entryId, setNewComment }) => {
       >
         Post comment
       </button>
+
+      {errorMsgComment && (
+        <p className="p-error-message-input p-small">{errorMsgComment}</p>
+      )}
     </div>
   );
 };

@@ -21,6 +21,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   const date = calculateDifference(entry.createdAt);
   const { isModalOpen, openModal, closeModal } = useModal();
   const [newComment, setNewComment] = useState(false);
+  const [errorMsgComment, setErrorMsgComment] = useState(null);
   const userId = useSelector((state) => state.auth.user && state.auth.user.uid);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +44,12 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
   };
 
   const submitComment = async (entryId, comment) => {
-    const { success, errorMsg, statusCode } = await dispatch(
-      startAddComment(entryId, comment)
-    );
+    setErrorMsgComment(null);
+    if (comment.trim().length < 5) {
+      setErrorMsgComment("Comment must be at least 5 characters long");
+      return;
+    }
+    const { statusCode } = await dispatch(startAddComment(entryId, comment));
     if (statusCode === 401) {
       await handleLogoutWithPreviousPage(dispatch);
       return navigate("/auth/login");
@@ -126,7 +130,9 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
                       >
                         {comment.user.username}
                       </Link>
-                      <p className="p-date-comment">{formatDateTime(comment.createdAt)}</p>
+                      <p className="p-date-comment">
+                        {formatDateTime(comment.createdAt)}
+                      </p>
                       <hr />
                     </div>
                   ))
@@ -152,6 +158,7 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
           submitComment={submitComment}
           entryId={entry.uid}
           setNewComment={setNewComment}
+          errorMsgComment={errorMsgComment}
         />
       )}
     </div>

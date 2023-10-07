@@ -7,19 +7,27 @@ import Tooltip from "@mui/material/Tooltip";
 import clsx from "clsx";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import * as React from "react";
+import io from "socket.io-client";
 import FriendRequestList from "./FriendRequestList";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  newFriendRequest,
+  openFriendRequestsReceived,
   startGetFriendRequestsReceived,
   startOpenedFriendRequestsReceived,
 } from "../../../actions/user";
 
-const MenuComponent = ({ handleLogout, usernameLetter, picture }) => {
+const socket = io("http://localhost:8080", {
+  withCredentials: true,
+});
+
+const MenuComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuRef = React.useRef(null);
   const { friendRequestsReceived } = useSelector((state) => state.user);
   const { openedFriendRequests } = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = React.useState(true);
+  const username = useSelector((state) => state.auth.user?.username);
 
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -35,6 +43,14 @@ const MenuComponent = ({ handleLogout, usernameLetter, picture }) => {
       dispatch(startOpenedFriendRequestsReceived());
     }
   };
+
+  React.useEffect(() => {
+    socket.on("friendRequestSent", (data) => {
+      if (data.username === username) return;
+      dispatch(newFriendRequest(data));
+      dispatch(openFriendRequestsReceived(false));
+    });
+  }, []);
 
   const handleClose = () => {
     setAnchorEl(null);

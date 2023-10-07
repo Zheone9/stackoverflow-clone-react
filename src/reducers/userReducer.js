@@ -55,6 +55,14 @@ export const userReducer = (state = initialState, action) => {
         friendRequestsReceived: [],
         openedFriendRequests: false,
       };
+    case types.newFriendRequest:
+      return {
+        ...state,
+        friendRequestsReceived: [
+          ...state.friendRequestsReceived,
+          action.payload.friendInfo,
+        ],
+      };
 
     default:
       return state;

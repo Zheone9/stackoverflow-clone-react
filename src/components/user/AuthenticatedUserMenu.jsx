@@ -26,7 +26,7 @@ const AuthenticatedUserMenu = ({
       handleLogout={handleLogout}
       usernameLetter={username[0].toUpperCase()}
       picture={picture}
-      username={username}
+      username={username} 
 
       // Aquí también puedes pasar 'picture' a 'AccountMenu' si lo necesitas
     />

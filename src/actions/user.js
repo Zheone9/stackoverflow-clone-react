@@ -177,7 +177,7 @@ export const startGetFriendRequestsReceived = () => {
     }
   };
 };
-const openFriendRequestsReceived = (value) => ({
+export const openFriendRequestsReceived = (value) => ({
   type: types.openFriendRequests,
   payload: {
     value,
@@ -240,5 +240,12 @@ const sentFriendRequest = (username) => ({
   type: types.sentFriendRequest,
   payload: {
     username,
+  },
+});
+
+export const newFriendRequest = (friendInfo) => ({
+  type: types.newFriendRequest,
+  payload: {
+    friendInfo,
   },
 });

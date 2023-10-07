@@ -155,18 +155,14 @@ export const setNewQuestion = (newQuestion) => ({
 
 export const startAddComment = (entryId, comment) => {
   return async (dispatch) => {
-    try {
-      const response = await addCommentToEntry(entryId, comment);
-      if (response.data.ok) {
-        dispatch(addComment(entryId, response.data.comment));
-      }
-
-      return { success: true, errorMsg: null, statusCode: 200 };
-    } catch (error) {
+    const response = await addCommentToEntry(entryId, comment);
+    if (response.data?.ok) {
+      dispatch(addComment(entryId, response.data.comment));
+      return { success: true, statusCode: 200 };
+    } else {
       return {
         success: false,
-        errorMsg: null,
-        statusCode: 401,
+        statusCode: response.statusCode,
       };
     }
   };
@@ -187,9 +183,9 @@ const addCommentToEntry = async (entryId, body) => {
       config
     );
   } catch (error) {
+    console.log(error.response);
     return {
       success: false,
-      errorMsg: null,
       statusCode: error.response.status,
     };
   }

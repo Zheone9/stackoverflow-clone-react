@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const FriendRequest = ({ friend }) => {
   const dispatch = useDispatch();
   const handleAcceptFriendRequest = () => {
+    console.log(friend.username);
     dispatch(startAcceptFriendRequest(friend.username));
   };
   const handleRejectFriendRequest = () => {
