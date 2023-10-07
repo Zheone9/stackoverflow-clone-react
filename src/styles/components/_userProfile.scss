@@ -40,12 +40,18 @@
     font-size: small;
   }
 
-
   .p-date-profile {
     font-size: small;
   }
 }
 
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
 .sent-friend-request {
   background-color: #f2f2f2;
   color: #4f4f4f;

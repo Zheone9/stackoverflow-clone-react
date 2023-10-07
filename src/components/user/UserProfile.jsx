@@ -14,6 +14,7 @@ import {
   startRemoveFriend,
 } from "../../actions/user";
 import axios from "axios";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const UserProfile = () => {
   const { username } = useParams();
@@ -24,6 +25,12 @@ const UserProfile = () => {
     )
   );
 
+  const isAlreadyFriend = useSelector(
+    (state) =>
+      state.user.friendList.filter((friend) => friend.username === username)
+        .length
+  );
+
   const APIURL = import.meta.env.VITE_REACT_API_URL;
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState(null);
@@ -32,6 +39,18 @@ const UserProfile = () => {
   const [isFriend, setIsFriend] = useState(false);
   const [sentFriendRequest, setSentFriendRequest] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const buttonText = sentFriendRequest
+    ? "Request sent"
+    : isFriend
+    ? "Remove friend"
+    : userSentFriendRequest.length > 0
+    ? "Accept friend request"
+    : "Add friend";
+
+  useEffect(() => {
+    if (isAlreadyFriend > 0) setIsFriend(true);
+  }, [isAlreadyFriend]);
 
   const handleAddFriend = async () => {
     if (!isAuthenticated) {
@@ -159,31 +178,23 @@ const UserProfile = () => {
         {usernameLogged !== userProfile.username ? (
           <div className="buttons-profile">
             <button
-              className={clsx(
-                "btn-add-friend",
-                {
-                  "sent-friend-request": sentFriendRequest,
-                },
-                {
-                  "sent-friend-request": isFriend,
-                }
-              )}
-              onClick={() => handleAddFriend()}
+              className={clsx("btn-add-friend-request", {
+                "sent-friend-request": sentFriendRequest || isFriend,
+                "class-accept-friend-request": userSentFriendRequest.length > 0,
+              })}
+              onClick={handleAddFriend}
             >
-              {sentFriendRequest
-                ? "Request sent"
-                : isFriend
-                ? "Remove friend"
-                : userSentFriendRequest.length > 0
-                ? "Accept friend request"
-                : "Add friend"}
+              <TransitionGroup>
+                <CSSTransition key={buttonText} timeout={500} classNames="fade">
+                  <span style={{ minWidth: "120px" }}>{buttonText}</span>
+                </CSSTransition>
+              </TransitionGroup>
             </button>
             <button className="btn-report" onClick={() => handleReport()}>
               Report
             </button>
           </div>
         ) : null}
-
         <div className="div-joinDate-profile">
           <p className="p-joinDate-profile">Join Date</p>
           <p className="p-date-profile">

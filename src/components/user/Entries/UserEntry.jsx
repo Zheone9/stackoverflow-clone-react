@@ -123,7 +123,6 @@ const UserEntry = ({ entry, setOptionsClicked, isAuthenticaded }) => {
                   entry.comments.map((comment) => (
                     <div key={comment.uid} className="div-comment">
                       <p className="comment-body">{comment.body}</p>
-
                       <Link
                         to={`/user/${comment.user.username}`}
                         className="comment-author"

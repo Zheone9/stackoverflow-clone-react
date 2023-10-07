@@ -17,19 +17,34 @@ import {
   startOpenedFriendRequestsReceived,
 } from "../../../actions/user";
 
-const socket = io("http://localhost:8080", {
-  withCredentials: true,
-});
-
+let socket;
+const initSocket = (userId) => {
+  socket = io("http://localhost:8080", {
+    withCredentials: true,
+    auth: {
+      userId: userId,
+    },
+  });
+};
 const MenuComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuRef = React.useRef(null);
   const { friendRequestsReceived } = useSelector((state) => state.user);
   const { openedFriendRequests } = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = React.useState(true);
-  const username = useSelector((state) => state.auth.user?.username);
+
+  const user = useSelector((state) => state?.auth?.user);
 
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    // Configura el socket con el userId cuando cambie
+    if (user) {
+      console.log("id", user.uid);
+      initSocket(user.uid); // Inicializa el socket cuando el usuario cambie.
+    }
+  }, [user]);
+
   React.useEffect(() => {
     const getFriendList = async () => {
       await dispatch(startGetFriendRequestsReceived());
@@ -37,6 +52,7 @@ const MenuComponent = () => {
     };
     getFriendList();
   }, [dispatch]);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     if (!openedFriendRequests) {
@@ -45,12 +61,28 @@ const MenuComponent = () => {
   };
 
   React.useEffect(() => {
-    socket.on("friendRequestSent", (data) => {
-      if (data.username === username) return;
-      dispatch(newFriendRequest(data));
-      dispatch(openFriendRequestsReceived(false));
-    });
-  }, []);
+    // Comprueba que el socket exista antes de intentar configurar el oyente.
+    if (socket) {
+      socket.on("solicitudAmistad", (data) => {
+        console.log(data);
+        const isAlreadyOnFriendRequests = friendRequestsReceived.some(
+          (friendRequest) => friendRequest._id === data._id
+        );
+
+        if (isAlreadyOnFriendRequests) {
+          return;
+        }
+
+        dispatch(newFriendRequest(data));
+        dispatch(openFriendRequestsReceived(false));
+      });
+
+      // No olvides deshacerte de los listeners cuando el componente se desmonte
+      return () => {
+        socket.off("solicitudAmistad");
+      };
+    }
+  }, [socket, friendRequestsReceived, dispatch]); // Agregar el socket y las solicitudes de amigos recibidos como dependencias.
 
   const handleClose = () => {
     setAnchorEl(null);
