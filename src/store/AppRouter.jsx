@@ -2,11 +2,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Header from "../components/Header";
 import MainContent from "../routers/MainContent";
 import React, { useState } from "react";
-import { getSocket } from "../socket/socket";
+import { getSocket, initSocket } from "../socket/socket";
 import CustomSnackbar from "../components/user/Profile/CustomSnackbar";
 import { useDispatch } from "react-redux";
 import { addFriendToFriendList } from "../actions/user";
 
+initSocket();
 const AppRouter = () => {
   const [messageSnackbar, setMessageSnackbar] = useState(null);
   const [open, setOpen] = useState(false);

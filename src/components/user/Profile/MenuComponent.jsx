@@ -47,6 +47,7 @@ const MenuComponent = () => {
     // Comprueba que el socket exista antes de intentar configurar el oyente.
     if (socket) {
       socket.on("solicitudAmistad", (data) => {
+        console.log(data);
         const isAlreadyOnFriendRequests = friendRequestsReceived.some(
           (friendRequest) => friendRequest._id === data.uid
         );

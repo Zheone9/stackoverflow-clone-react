@@ -1,18 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { logoutUser, startHandleLogout } from "../actions/auth";
+import { useLocation } from "react-router-dom";
+import { startHandleLogout } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
-import AccountMenu from "./user/AccountMenu.jsx";
 import {
   selectPicture,
   selectUsername,
 } from "../helpers/header/selectUsername.js";
-import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useProSidebar } from "react-pro-sidebar";
 import AuthenticatedUserMenu from "./user/AuthenticatedUserMenu.jsx";
+import { getSocket } from "../socket/socket";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,8 +20,10 @@ const Header = () => {
   const picture = useSelector(selectPicture);
   const dispatch = useDispatch();
   const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
+
   const handleLogout = async () => {
     const success = await dispatch(startHandleLogout());
+    getSocket().disconnect();
     if (!success) return console.log("Hubo un error al desloguearse");
     navigate("/");
   };

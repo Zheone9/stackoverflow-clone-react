@@ -10,6 +10,7 @@ import GoogleLoginButton from "./GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 import CustomFormik from "../CustomFormik.jsx";
 import { loginFormSchema } from "../../helpers/formValidation/formSchema.js";
+import { getSocket } from "../../socket/socket";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,13 @@ const LoginScreen = () => {
 
   const onSuccess = async ({ clientId, credential }) => {
     await dispatch(startLoginWithGoogle(clientId, credential));
+
+    getSocket().on("connect_error", (error) => {
+      console.log(error);
+    });
+
+    getSocket().connect();
+
     if (prevPage) {
       return navigate(prevPage);
     }
