@@ -63,7 +63,11 @@ export const userReducer = (state = initialState, action) => {
           action.payload.friendInfo,
         ],
       };
-
+    case types.addFriendToFriendList:
+      return {
+        ...state,
+        friendList: [...state.friendList, action.payload.friendInfo],
+      };
     default:
       return state;
   }

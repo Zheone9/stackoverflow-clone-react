@@ -222,7 +222,7 @@ export const getFriendRequestsReceived = (friendRequestsReceived) => ({
   },
 });
 
-const acceptFriendRequest = (friendInfo) => ({
+export const acceptFriendRequest = (friendInfo) => ({
   type: types.acceptFriendRequest,
   payload: {
     friendInfo,
@@ -245,6 +245,13 @@ const sentFriendRequest = (username) => ({
 
 export const newFriendRequest = (friendInfo) => ({
   type: types.newFriendRequest,
+  payload: {
+    friendInfo,
+  },
+});
+
+export const addFriendToFriendList = (friendInfo) => ({
+  type: types.addFriendToFriendList,
   payload: {
     friendInfo,
   },

@@ -14,6 +14,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 Modal.setAppElement("#root");
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { io } from "socket.io-client";
+import { initSocket } from "./socket/socket";
 export const SocketContext = createContext();
 
 const clientId =
@@ -37,12 +38,8 @@ const MainComponent = () => {
         })
       );
     }
-
-    return () => {
-      socket.disconnect();
-    };
   }, [user]);
-
+  initSocket(user?.uid);
   return (
     <SocketContext.Provider value={socket}>
       <AppRouter />

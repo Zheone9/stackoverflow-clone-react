@@ -30,6 +30,7 @@ const UserProfile = () => {
       state.user.friendList.filter((friend) => friend.username === username)
         .length
   );
+  const friendList = useSelector((state) => state.user.friendList);
 
   const APIURL = import.meta.env.VITE_REACT_API_URL;
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const UserProfile = () => {
   const [sentFriendRequest, setSentFriendRequest] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const buttonText = sentFriendRequest
+  let buttonText = sentFriendRequest
     ? "Request sent"
     : isFriend
     ? "Remove friend"
@@ -49,8 +50,11 @@ const UserProfile = () => {
     : "Add friend";
 
   useEffect(() => {
-    if (isAlreadyFriend > 0) setIsFriend(true);
-  }, [isAlreadyFriend]);
+    if (isAlreadyFriend > 0) {
+      setSentFriendRequest(false);
+      setIsFriend(true);
+    }
+  }, [isAlreadyFriend, friendList]);
 
   const handleAddFriend = async () => {
     if (!isAuthenticated) {
