@@ -28,18 +28,15 @@ const MainComponent = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (user && user.uid) {
-      setSocket(
-        io("http://localhost:8080", {
-          withCredentials: true,
-          auth: {
-            userId: user.uid,
-          },
-        })
-      );
-    }
-  }, [user]);
-  initSocket(user?.uid);
+    setSocket(
+      io("http://localhost:8080", {
+        withCredentials: true,
+      })
+    );
+  }, []);
+
+  initSocket();
+
   return (
     <SocketContext.Provider value={socket}>
       <AppRouter />

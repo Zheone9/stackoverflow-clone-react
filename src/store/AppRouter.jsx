@@ -18,6 +18,9 @@ const AppRouter = () => {
     const socket = getSocket();
     // Comprueba que el socket exista antes de intentar configurar el oyente.
     if (socket) {
+      socket.on("connect_error", (err) => {
+        console.log(`connect_error due to: ${err.message}`);
+      });
       socket.on("aceptarSolicitudAmistad", (data) => {
         dispatch(addFriendToFriendList(data));
         setMessageSnackbar(`You are now friends with ${data.username}`);
