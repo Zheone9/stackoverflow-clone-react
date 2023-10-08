@@ -7,7 +7,6 @@ import Tooltip from "@mui/material/Tooltip";
 import clsx from "clsx";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import * as React from "react";
-import io from "socket.io-client";
 import FriendRequestList from "./FriendRequestList";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,16 +15,8 @@ import {
   startGetFriendRequestsReceived,
   startOpenedFriendRequestsReceived,
 } from "../../../actions/user";
+import { getSocket } from "../../../socket/socket";
 
-let socket;
-const initSocket = (userId) => {
-  socket = io("http://localhost:8080", {
-    withCredentials: true,
-    auth: {
-      userId: userId,
-    },
-  });
-};
 const MenuComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuRef = React.useRef(null);
@@ -34,16 +25,7 @@ const MenuComponent = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const user = useSelector((state) => state?.auth?.user);
-
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    // Configura el socket con el userId cuando cambie
-    if (user) {
-      console.log("id", user.uid);
-      initSocket(user.uid); // Inicializa el socket cuando el usuario cambie.
-    }
-  }, [user]);
 
   React.useEffect(() => {
     const getFriendList = async () => {
@@ -61,12 +43,12 @@ const MenuComponent = () => {
   };
 
   React.useEffect(() => {
+    const socket = getSocket();
     // Comprueba que el socket exista antes de intentar configurar el oyente.
     if (socket) {
       socket.on("solicitudAmistad", (data) => {
-        console.log(data);
         const isAlreadyOnFriendRequests = friendRequestsReceived.some(
-          (friendRequest) => friendRequest._id === data._id
+          (friendRequest) => friendRequest._id === data.uid
         );
 
         if (isAlreadyOnFriendRequests) {
@@ -82,7 +64,7 @@ const MenuComponent = () => {
         socket.off("solicitudAmistad");
       };
     }
-  }, [socket, friendRequestsReceived, dispatch]); // Agregar el socket y las solicitudes de amigos recibidos como dependencias.
+  }, [friendRequestsReceived, dispatch]);
 
   const handleClose = () => {
     setAnchorEl(null);

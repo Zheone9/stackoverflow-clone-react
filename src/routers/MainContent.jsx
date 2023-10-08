@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserEntries from "../components/user/Entries/UserEntries";
 import { useSelector } from "react-redux";
@@ -10,9 +9,7 @@ import StyledContainer from "../helpers/styledContainer";
 import ProfileRoutes from "./ProfileRoutes.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import Dashboard from "../components/user/Profile/Dashboard.jsx";
-import ChangeUsername from "../components/user/Profile/ChangeUsername.jsx";
 import { selectUsername } from "../helpers/header/selectUsername.js";
-import ChangeAvatar from "../components/user/Profile/ChangeAvatar.jsx";
 import AccountPage from "../components/user/Profile/AccountPage.jsx";
 import UserProfile from "../components/user/UserProfile";
 
